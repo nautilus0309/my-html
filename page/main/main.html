@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NautilusDesign</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="/img/main/Union.png" type="image/x-icon">
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.body.addEventListener('copy', function (e) {
+                e.preventDefault();
+            });
+            document.body.addEventListener('selectstart', function (e) {
+                e.preventDefault();
+            });
+            document.body.style.userSelect = 'none';
+            document.body.style.webkitUserSelect = 'none';
+            document.body.style.msUserSelect = 'none';
+        });
+    </script>
+</head>
+
+<body>
+    <!-- 右侧抽屉栏 -->
+    <div id="sidebar-drawer">
+        <div id="menu-close-trigger">
+            <div class="menu-text">
+                <a class="FZMSTFW3 navbar-menu-link">菜单</a>
+                <a class="SMILEYSANS2 navbar-menu-subtitle">Menu</a>
+            </div>
+            <div class="menu-lines2">
+                <div class="line2"
+                    style="transform: rotate(-15deg);">
+                </div>
+                <div class="line2"
+                    style="transform: rotate(15deg);">
+                </div>
+            </div>
+        </div>
+        <div class="sidebar-text">
+            <div class="sidebar-text-item">
+                <a class="FZMSTFW3 sidebar-text-link"
+                style="font-size: 30px;"
+                href="/page/personal/Personal Project.html">个人项目</a>
+                <a class="SMILEYSANS2 sidebar-text-subtitle" 
+                style="font-size: 16px;"
+                href="/page/personal/Personal Project.html">Personal Project</a>
+            </div>
+            <div class="sidebar-text-item">
+                <a class="FZMSTFW3 sidebar-text-link"
+                style="font-size: 30px;"
+                href="/page/collaborative/Collaborative Project.html">合作项目</a>
+                <a class="SMILEYSANS2 sidebar-text-subtitle"
+                style="font-size: 16px;"
+                href="/page/collaborative/Collaborative Project.html">Collaborative
+                 Project</a>
+            </div>
+            <div class="sidebar-text-item">
+                <a class="FZMSTFW3 sidebar-text-link"
+                style="font-size: 30px;"
+                href="/page/project/Project Scheduling.html">项目排单</a>
+                <a class="SMILEYSANS2 sidebar-text-subtitle"
+                style="font-size: 16px;"
+                href="/page/project/Project Scheduling.html">Project Scheduling</a>
+            </div>
+        </div>
+        <!-- 可在此处添加内容 -->
+    </div>
+    <div id="navbar" class="navbar-show">
+        <div class="navbar-container">
+            <img src="/img/main/Group 119.png" alt="俺的图图呢" class="navbar-logo">
+            <p class="SMILEYSANS navbar-tagline">Keyboard, desktop, work & life.</p>
+            <div class="navbar-menu">
+                <div class="navbar-menu-item">
+                    <a class="FZMSTFW2 navbar-menu-link" href="/page/personal/Personal Project.html">个人项目</a>
+                    <a class="SMILEYSANS navbar-menu-subtitle" href="/page/personal/Personal Project.html">Personal Project</a>
+                </div>
+                <div class="navbar-menu-item">
+                    <a class="FZMSTFW2 navbar-menu-link" href="/page/collaborative/Collaborative Project.html">合作项目</a>
+                    <a class="SMILEYSANS navbar-menu-subtitle" href="/page/collaborative/Collaborative Project.html">Collaborative
+                        Project</a>
+                </div>
+                <div class="navbar-menu-item">
+                    <a class="FZMSTFW2 navbar-menu-link" href="/page/project/Project Scheduling.html">项目排单</a>
+                    <a class="SMILEYSANS navbar-menu-subtitle" href="/page/project/Project Scheduling.html">Project Scheduling</a>
+                </div>
+                <div class="navbar-menu-item">
+                    <a class="FZMSTFW2 navbar-menu-link" href="#bottom">关于我们</a>
+                    <a class="SMILEYSANS navbar-menu-subtitle" href="#bottom">About Us</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="top-fixed-group">
+        <img src="/img/main/Union.png" alt="俺的图图呢" class="top-logo" style="cursor: pointer;">
+        <div id="menu-trigger">
+            <div class="menu-text">
+                <a class="FZMSTFW2 navbar-menu-link">菜单</a>
+                <a class="SMILEYSANS navbar-menu-subtitle">Menu</a>
+            </div>
+            <div class="menu-lines">
+                <div class="line"></div>
+                <div class="line"></div>
+            </div>
+        </div>
+    </div>
+
+    <img src="/img/main/Group 117.png" alt="俺的图图呢" class="main-image">
+    <div id="footer-left">
+        <div class="footer-left-content">
+            <p class="CAROUSELPRO footer-at">@</p>
+            <p class="CAROUSELPRO footer-name">Nero</p>
+        </div>
+        <p class="SMILEYSANS footer-since">Since 2025. Just play for fun.</p>
+    </div>
+    <div id="footer-info">
+        <p class="SMILEYSANS footer-info-text">NautilusDesign</p>
+        <img src="/img/main/Vector (Stroke).png" alt="俺的图图呢" class="footer-info-icon">
+        <p class="SMILEYSANS footer-info-location">2025 Zhejiang China.</p>
+    </div>
+    <script>
+        window.addEventListener('scroll', function () {
+            const footer = document.getElementById('footer-info');
+            const footerLeft = document.getElementById('footer-left');
+            if (window.scrollY > 0) {
+                footer.style.opacity = '0';
+                footerLeft.style.opacity = '0';
+            } else {
+                footer.style.opacity = '1';
+                footerLeft.style.opacity = '1';
+            }
+        });
+        const topFixedGroup = document.getElementById('top-fixed-group');
+        topFixedGroup.style.opacity = '0';
+        window.addEventListener('scroll', function () {
+            if (window.scrollY > 300) {
+                topFixedGroup.style.opacity = '1';
+                topFixedGroup.style.transition = 'opacity 1s';
+            } else {
+                topFixedGroup.style.opacity = '0';
+                topFixedGroup.style.transition = 'opacity 0.5s';
+            }
+        });
+        let lastScrollY = window.scrollY;
+        window.addEventListener('scroll', function () {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 290) {
+                navbar.classList.remove('navbar-show');
+                navbar.classList.add('navbar-hide');
+            } else {
+                navbar.classList.remove('navbar-hide');
+                navbar.classList.add('navbar-show');
+            }
+        });
+    </script>
+    <div style="max-width: 930px; margin: 336.5px auto 0 auto; text-align: left; margin-bottom: 80px;">
+        <div style="display: flex; flex-direction: row; align-items: flex-start; margin-top: 40px;">
+            <div style="
+            width: 125.5px;
+            height: 2px;
+            background: #202020;
+            transform: rotate(-15deg);
+            margin-top: 18px;
+        "></div>
+            <p class="FZMSTFW" style="font-size: 35px; margin: 0 0 0 20px;">关于我们</p>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 5px;">
+            <p class="FZMSTFW" style="font-size: 18px; line-height: normal; white-space: pre-line; margin: 0;">
+                入坑客制化已有六年，这期间体验过不少产品，也见证了不少值得改进之处。制作一把属于自己的键盘或一套专属键帽，相信是包括我在内的许多玩家的共同愿望。然而，现实往往受限于技术、资源或时间，许多想法最终只能搁置。同样，作为客制化团长，想要完美实现产品构想也非易事——毕竟人各有所长，许多环节需要专业伙伴协作完成。
+                说到这里，大家可能已经明白了——我们成立“打手”工作室的初衷，正是为了解决这些问题。无论您是玩家渴望实现个人创意，还是团长希望提升产品整体品质，只要您有想法，我们都乐于提供支持。
+                我们的业务范围涵盖：
+                键盘结构设计：配列/定位板绘制、外壳设计与修改、3D打印结构验证。
+                视觉呈现：产品渲染图/宣传图、品牌视觉物料、键帽设计图/渲染图。
+                电子与生产支持：PCB设计/验证/固件编译、内外包装设计、说明书设计。
+                简而言之，除了宣发、量产和最终物流交付，我们基本覆盖了客制化产品开发所需的全流程设计服务。
+                一个项目若由多人分散协作，统一风格往往耗时费力，效果还不尽如人意。因此，一个能统筹全局的设计核心至关重要。以往，若团长缺乏这方面的把控力，产品物料就容易显得零散拼凑。这也是为什么成熟工作室的作品，通常比小型团队看起来更精致、更完整。
+                工作室初创，团队规模有限，承接能力尚在发展中。但我们可以承诺：对经手的每一个项目，都会倾注心血，力求精品。同时，我们也热忱欢迎有能力、有梦想的伙伴加入，一起为键圈的未来添砖加瓦（当然，也让优秀的设计获得应有的回报）。
+            </p>
+        </div>
+    </div>
+    <div id="bottom-div"
+        style="width: 100%; height: 185px; background: #202020; border-radius: 80px 0px 0px 0px; bottom: 0px; display: flex; align-items: center;">
+        <div
+            style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; width: 100%;">
+            <img src="/img/main/Group 120.png" alt="俺的图图呢" style="width: 305px; margin-left: 150px;">
+            <div id="bottom-trigger" style="display: flex; align-items: center; gap: 40px; margin-right: 0px;">
+                <div>
+                    <p class="FZMSTFW3" style="font-size: 30px;color: #F3E6DA; margin: 0; transform: translateY(0px);">
+                    联系我们</p>
+                    <p class="SMILEYSANS" style="font-size: 18px;color: #F3E6DA; margin: 0; transform: translateY(-3px);">
+                    Contact Us</p>
+                </div>
+                <img src="/img/main/Group 121.png" alt="俺的图图呢"
+                    style="width: 276.95px; display: block; transform: translateY(0px);">
+            </div>
+        </div>
+    </div>
+    <!-- 底部抽屉栏 -->
+    <div id="bottom-drawer">
+        <div
+            style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; width: 100%;">
+            <img src="/img/main/Group 120black.png" alt="俺的图图呢" style="width: 256.54px; height:53.72px ;margin-top: -85px; margin-left: 90px;">
+        </div>
+        <div style="position: absolute; left: 50%; transform: translateX(-50%);">
+            <div style="display: flex; flex-direction: row; position: absolute; left: 50%; transform: translateX(-50%); margin-top: 55px;">
+                <p class="CAROUSELPRO2" style="transform: translateY(-4px); font-size: 30px;">@</p>
+                <p class="CAROUSELPRO2" style="font-size: 30px;">Nero</p>
+            </div>
+            <p class="SMILEYSANS2" style=" margin-top: 30px;">NautilusDesign - 2025 - Zhejiang China</p>
+        </div>
+        <div class="bottom-contactus">
+            <div style="display: flex; flex-direction: row; align-items: flex-start; transform: translateX(70px);">
+                <div style="
+                    width: 125.5px;
+                    height: 2px;
+                    background: #F3E6DA;
+                    transform: rotate(-15deg);
+                    margin-top: 18px;">
+                </div>
+                <p class="FZMSTFW3" style="font-size: 40px; margin: 0 0 0 20px; letter-spacing: 0.2em">联系我们</p>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: flex-start; margin-top: 20px;">
+                <div style="display: flex; flex-direction: row; align-items: flex-start; margin-bottom: 30px;">
+                    <img src="/img/main/Group 121-qq.png" alt="俺的图图呢" style="height: 57px;">
+                    <p class="bottom-contactus-text">
+                        Personal QQ Number:<br>
+                        827060207<br>
+                        <span style="font-size: 22px;">（私人QQ，请备注来意）</span>
+                    </p>
+                </div>
+                <div style="display: flex; flex-direction: row; align-items: flex-start; margin-bottom: 30px;">
+                    <img src="/img/main/Group 121-qq group.png" alt="俺的图图呢" style="height: 57px;">
+                    <p class="bottom-contactus-text">
+                        QQ Group:<br>
+                        Now Loading...<br>
+                        <span style="font-size: 22px;">（QQ交流|下单群，欢迎加群）</span>
+                    </p>
+                </div>
+                <div style="display: flex; flex-direction: row; align-items: flex-start;">
+                    <img src="/img/main/Group 121-email.png" alt="俺的图图呢" style="height: 57px;">
+                    <p class="bottom-contactus-text">
+                        E-Mail:<br>
+                        827060207@qq.com<br>
+                        <span style="font-size: 22px;">（个人邮箱，有问题请留言）</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div id="bottom-close-trigger">
+            <div class="bottom-menu-line">
+                <div class="bottom-line"
+                    style="transform: rotate(-15deg);">
+                </div>
+                <div class="bottom-line"
+                    style="transform: rotate(15deg);">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="bottom"></div>
+    <script>
+        document.querySelectorAll('a[href="#bottom"]').forEach(function (link) {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.getElementById('bottom').scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // 点击logo回到顶部
+        const topLogo = document.querySelector('.top-logo');
+            if (topLogo) {
+              topLogo.setAttribute('tabindex', '0'); 
+              topLogo.setAttribute('role', 'button'); 
+              topLogo.addEventListener('click', () => {
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+              topLogo.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            });
+        }
+        // 获取底部抽屉栏元素
+        const bottomdrawer = document.getElementById('bottom-drawer');
+        // 获取底部菜单触发区域元素
+        const bottomtrigger = document.getElementById('bottom-trigger');
+        // 打开底部抽屉函数：抽屉滑出
+        function opendrawer() {
+            bottomdrawer.style.bottom = '0px'; // 抽屉滑出
+        }
+        // 关闭底部抽屉函数：抽屉收回
+        function closedrawer() {
+            bottomdrawer.style.bottom = '-2000px'; // 抽屉收回
+        }
+        // 点击菜单触发区域，打开底部抽屉
+        bottomtrigger.addEventListener('click', function (e) {
+            e.preventDefault();
+            opendrawer();
+        });
+         // 在按下 ESC 时也关闭底部抽屉
+        document.addEventListener('keydown', function(e) {
+             if (e.key === 'Escape' && bottomdrawer.style.bottom === '0px') {
+            closedrawer();
+            }
+        });
+        // 页面滚动时自动关闭底部抽屉
+        window.addEventListener('scroll', function () {
+            if (bottomdrawer.style.bottom === '0px') {
+                closedrawer();
+            }
+        });
+        // 点击页面其他区域，关闭底部抽屉（排除抽屉本身和菜单触发区域） 
+        document.addEventListener('click', function (e) {
+            console.log(e.target)
+            if (bottomdrawer.style.bottom === '0px' && !bottomdrawer.contains(e.target) && !bottomtrigger.contains(e.target)) {
+                closedrawer();
+            }
+        });
+        // 点击抽屉内关闭按钮，关闭底部抽屉
+        const bottomclosetrigger = document.getElementById('bottom-close-trigger');
+        if (bottomclosetrigger) {
+            bottomclosetrigger.addEventListener('click', function(e) {
+                e.preventDefault();
+                closedrawer();
+            });
+        }
+
+
+        // 获取底部联系我们元素
+        const bottomDiv = document.getElementById('bottom-div');
+        // 获取右侧抽屉栏元素
+        const sidebarDrawer = document.getElementById('sidebar-drawer');
+        // 获取菜单触发区域元素
+        const menuTrigger = document.getElementById('menu-trigger');
+        // 获取“关于我们”内容区域，用于抽屉打开时左移
+        const aboutUsContent = document.querySelector('div[style*="max-width: 930px"]');
+
+        // 打开抽屉函数：抽屉滑出，内容左移
+        function openDrawer() {
+            sidebarDrawer.style.right = '10px'; // 抽屉滑出
+            if (aboutUsContent) {
+                aboutUsContent.style.transition = 'transform 0.4s cubic-bezier(.4,0,.2,1)'; // 平滑动画
+                aboutUsContent.style.transform = 'translateX(-160px)'; // 内容左移
+            }
+        }
+
+        // 关闭抽屉函数：抽屉收回，内容归位
+        function closeDrawer() {
+            sidebarDrawer.style.right = '-335px'; // 抽屉收回
+            if (aboutUsContent) {
+                aboutUsContent.style.transform = 'translateX(10px)'; // 内容归位
+            }
+        }
+
+        // 点击菜单触发区域，打开抽屉
+        menuTrigger.addEventListener('click', function (e) {
+            e.preventDefault();
+            const result = adjustSidebarHeight();
+            openDrawer();
+        });
+
+        // 点击页面其他区域，关闭抽屉（排除抽屉本身和菜单触发区域） 
+        document.addEventListener('click', function (e) {
+            console.log(e.target)
+            if (sidebarDrawer.style.right === '10px' && !sidebarDrawer.contains(e.target) && !menuTrigger.contains(e.target)) {
+                closeDrawer();
+            }
+        });
+
+          // 点击抽屉内关闭按钮，关闭抽屉
+        const menuCloseTrigger = document.getElementById('menu-close-trigger');
+        if (menuCloseTrigger) {
+            menuCloseTrigger.addEventListener('click', function(e) {
+                e.preventDefault();
+                closeDrawer();
+            });
+        }
+
+         // 在按下 ESC 时也关闭抽屉
+        document.addEventListener('keydown', function(e) {
+             if (e.key === 'Escape' && sidebarDrawer.style.right === '10px') {
+            closeDrawer();
+            }
+        });
+
+        // 页面滚动时自动关闭抽屉
+        window.addEventListener('scroll', function () {
+            if (sidebarDrawer.style.right === '10px') {
+                closeDrawer();
+            }
+        });
+
+        // 计算底部div露出的高度
+        function calculateBottomDivVisibleHeight() {
+            if (!bottomDiv) {
+                console.warn('未找到底部div元素');
+                return 0;
+            }
+            
+            // 获取底部div的位置信息
+            const rect = bottomDiv.getBoundingClientRect();
+            const windowHeight = window.innerHeight;
+            
+            // 计算底部div在视口中的可见部分高度
+            if (rect.top >= windowHeight) {
+                // 完全在视口下方，不可见
+                return 0;
+            } else if (rect.bottom <= 0) {
+                // 完全在视口上方，不可见
+                return 0;
+            } else {
+                // 部分或完全可见
+                const visibleTop = Math.max(rect.top, 0);
+                const visibleBottom = Math.min(rect.bottom, windowHeight);
+                return Math.max(0, visibleBottom - visibleTop);
+            }
+        }
+
+        // 动态调整sidebar-drawer高度
+        function adjustSidebarHeight() {
+            // 获取底部div露出的高度
+            const bottomDivVisibleHeight = calculateBottomDivVisibleHeight();
+            
+            // 获取视口高度
+            const viewportHeight = window.innerHeight;
+            
+            // 计算sidebar-drawer的新高度
+            let newHeight;
+            
+            if (bottomDivVisibleHeight > 0) {
+                // 底部div可见时，保持8px间距
+                newHeight = viewportHeight - bottomDivVisibleHeight - 18;
+            } else {
+                // 底部div不可见时，与网页底部保持8px间距
+                newHeight = viewportHeight - 18;
+            }
+            
+            // 确保高度不小于最小值
+            const minHeight = 200; // 最小高度200px
+            newHeight = Math.max(newHeight, minHeight);
+            
+            // 应用新高度
+            sidebarDrawer.style.height = newHeight + 'px';
+            sidebarDrawer.style.maxHeight = newHeight + 'px';
+            
+            // 输出调试信息
+            console.log('底部div可见高度:', bottomDivVisibleHeight + 'px');
+            console.log('sidebar-drawer新高度:', newHeight + 'px');
+            console.log('视口高度:', viewportHeight + 'px');
+            
+            return {
+                bottomDivVisibleHeight: bottomDivVisibleHeight,
+                sidebarHeight: newHeight,
+                viewportHeight: viewportHeight
+            };
+        }
+
+        // 点击事件处理
+        function handleAdjustClick() {
+            // 调整高度
+            const result = adjustSidebarHeight();
+            
+            // 显示调整结果
+            alert(`调整完成！\n底部div可见高度: ${result.bottomDivVisibleHeight}px\n侧边栏高度: ${result.sidebarHeight}px`);
+        }
+
+    </script>
+</body>
+
+</html>

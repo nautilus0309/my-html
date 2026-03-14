@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Project</title>
+    <link rel="stylesheet" href="personal.css">
+    <link rel="icon" href="/img/main/Union.png" type="image/x-icon">
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.body.addEventListener('copy', function (e) {
+                e.preventDefault();
+            });
+            document.body.addEventListener('selectstart', function (e) {
+                e.preventDefault();
+            });
+            document.body.style.userSelect = 'none';
+            document.body.style.webkitUserSelect = 'none';
+            document.body.style.msUserSelect = 'none';
+        });
+    </script>
+    <!-- 生产环境版本，优化了尺寸和速度 -->
+    <script src="/js/vue.min.js"></script>
+
+
+</head>
+
+<body>
+
+    <div id="navbar" class="navbar-show">
+        <div class="navbar-container">
+            <div id="top-fixed-group">
+                <img src="/img/main/Union.png" alt="俺的图图呢" class="top-logo" style="cursor: pointer;">
+                <div id="menu-trigger">
+                    <div class="menu-text">
+                        <a class="FZMSTFW2 navbar-menu-link">菜单</a>
+                        <a class="SMILEYSANS navbar-menu-subtitle">Menu</a>
+                    </div>
+                    <div class="menu-lines">
+                        <div class="line"></div>
+                        <div class="line"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- 右侧抽屉栏 -->
+    <div id="sidebar-drawer">
+        <div id="menu-close-trigger">
+            <div class="menu-text">
+                <a class="FZMSTFW3 navbar-menu-link">菜单</a>
+                <a class="SMILEYSANS2 navbar-menu-subtitle">Menu</a>
+            </div>
+            <div class="menu-lines2">
+                <div class="line2" style="transform: rotate(-15deg);">
+                </div>
+                <div class="line2" style="transform: rotate(15deg);">
+                </div>
+            </div>
+        </div>
+        <div class="sidebar-text">
+            <div class="sidebar-text-item">
+                <a class="FZMSTFW3 sidebar-text-link" style="font-size: 30px;" href="/page/main/main.html">首<span
+                        style="color: #202020;">首页</span>页</a>
+                <a class="SMILEYSANS2 sidebar-text-subtitle" style="font-size: 16px;"
+                    href="/page/main/main.html">NautilusDesign</a>
+            </div>
+            <div class="sidebar-text-item">
+                <a class="FZMSTFW3 sidebar-text-link" style="font-size: 30px;"
+                    href="/page/collaborative/Collaborative Project.html">合作项目</a>
+                <a class="SMILEYSANS2 sidebar-text-subtitle" style="font-size: 16px;"
+                    href="/page/collaborative/Collaborative Project.html">Collaborative
+                    Project</a>
+            </div>
+            <div class="sidebar-text-item">
+                <a class="FZMSTFW3 sidebar-text-link" style="font-size: 30px;"
+                    href="/page/project/Project Scheduling.html">项目排单</a>
+                <a class="SMILEYSANS2 sidebar-text-subtitle" style="font-size: 16px;"
+                    href="/page/project/Project Scheduling.html">Project Scheduling</a>
+            </div>
+        </div>
+        <!-- 可在此处添加内容 -->
+    </div>
+    <div id="main-show"
+        style="width: 100%; height: 100%;background: #F3E6DA; display: flex;flex-direction: column; margin-top: 89px; margin-left: 0;">
+        <teleport to="body">
+            <div
+                style="display: flex;text-align: left;position: fixed;z-index: 999999;background: #F3E6DA;padding-top: 34px;padding-bottom: 27px;width: 100%;">
+                <div
+                    style="display: flex; align-items: flex-start;padding-left: 296px;    height: 43px;width: 302pxpx;">
+                    <div
+                        style="width: 125.5px; height: 1.2px; background: #202020; transform:rotate(-15deg); margin-top: 19px;">
+                    </div>
+                    <p class="FZMSTFW" style="font-size: 35px; margin: 1px 1px 0 17px;">个人项目</p>
+                </div>
+            </div>
+        </teleport>
+        <template id="app">
+
+            <div class="project-list">
+                <!--单个项目展示-->
+                <div class="project-block" v-for="(item,index) in project_json">
+                    <!--左侧图片-->
+                    <div class="project-image">
+                        <div style="padding-left: 150px;padding-top: 66px;display: flex;">
+                            <a class="CAROUSELPRO" style="color: #F3E6DA;font-size: 50px;font-weight: 400;width: 126px;height: 58px;
+                            font-style: Regular;
+                            line-height: 100%;
+                            letter-spacing: 0%;
+                            text-align: center;
+                            ">{{item.tag}}</a>
+                        </div>
+                        <transition name="fade">
+                            <div v-if="open_side_drawer"
+                                style="padding-left: 150px;padding-top: 66px;display: flex;position: absolute;background-color: #202020;">
+                                <a class="CAROUSELPRO" style="color: #202020;font-size: 50px;font-weight: 400;width: 126px;height: 58px;
+                                font-style: Regular;
+                                line-height: 100%;
+                                letter-spacing: 0%;
+                                text-align: center;
+                                ">{{item.tag}}</a>
+                            </div>
+                        </transition>
+                        <div style="width: 726px;height: 327px;margin-left: 20px;padding-top: 34px;display: flex;">
+
+                            <div
+                                style="width: 138.56px;height: 327px;display: flex;flex-direction: column;justify-content: space-between;">
+                                <!-- 小图 1 -->
+                                <div class="thumb-wrapper" :class="{ active: item.activeThumbIndex === 0 }">
+                                    <img class="little-img" :src="small_img_src + item.little_img_src.src1"
+                                        @click="SwitchImg(0, index)">
+                                </div>
+                                <!-- 小图 2 -->
+                                <div class="thumb-wrapper" :class="{ active: item.activeThumbIndex === 1 }">
+                                    <img class="little-img" :src="small_img_src + item.little_img_src.src2"
+                                        @click="SwitchImg(1, index)">
+                                </div>
+                                <!-- 小图 3 -->
+                                <div class="thumb-wrapper" :class="{ active: item.activeThumbIndex === 2 }">
+                                    <img class="little-img" :src="small_img_src + item.little_img_src.src3"
+                                        @click="SwitchImg(2, index)">
+                                </div>
+                                <!-- 小图 4 -->
+                                <div class="thumb-wrapper" :class="{ active: item.activeThumbIndex === 3 }">
+                                    <img class="little-img" :src="small_img_src + item.little_img_src.src4"
+                                        @click="SwitchImg(3, index)">
+                                </div>
+                            </div>
+                            <div id="big-img"
+                                style="width: 582px; height: 327px; padding-left: 5.54px; position: relative; overflow: hidden;">
+                                <transition
+                                    :name="item.transitionDirection ? 'slide-vertical-' + item.transitionDirection : ''">
+                                    <img :key="item.big_img_src" :src="item.big_img_src"
+                                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; padding-left: 5.54px;"
+                                        alt="大图">
+                                </transition>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!--右侧文字-->
+                    <div class="project-text">
+                        <div style="width: 593px;height: 116px;">
+                            <a class="CAROUSELPRO" style="color: #202020;font-size: 100px;font-weight: 400;
+                        line-height: 116px;
+                            letter-spacing: 0.2em;">{{item.text.title}}</a>
+                        </div>
+                        <div style="width: 224px;height: 59px;margin-top: -14px;">
+                            <a class="CAROUSELPRO" style="color: #202020;font-size: 50px;font-weight: 400;
+                        font-style: normal;
+                        line-height: 58px;
+                        letter-spacing: -0.1em;
+                        ">{{item.text.project_type}}</a>
+                        </div>
+                        <div style="width: 539px;height: 1px;background-color: #202020;margin-top: -11px;">
+                            <a class="CAROUSELPRO" style="color: #20202000;font-size: 1px;">.</a>
+                        </div>
+                        <div style="width: 539px;height: 175px;margin-top: 24px;">
+                            <p class="FZMSTFW" style="color: #202020;font-size: 18px;
+                        font-weight: 400;
+                        letter-spacing: 20%;white-space: pre-line;
+                        font-style: normal;
+                        line-height: 22px;
+                        letter-spacing: 0.19em;
+                        ">{{item.text.detail}}</p>
+                        </div>
+                        <div v-if="!item.text.on_shop"
+                            style="width: 465px;height: 30px;margin-top: 45px;margin-left: 74px;display: flex;justify-content: right;">
+                            <div>
+                                <p class="FZMSTFW" style="font-size: 25px;
+                            font-weight: 400;
+                            letter-spacing: 20%;
+                            text-align: right;
+                            text-decoration: line-through 1px;
+                            color: #202020;
+                            font-style: Regular;
+                            line-height: 100%;
+                            ">COMING SOON</p>
+                            </div>
+                            <div>
+                                <p class="FZMSTFW" style="font-size: 25px;
+                            font-weight: 400;
+                            line-height: normal;                       
+                            letter-spacing: 20%;
+                            text-align: right;
+                            ">...</p>
+                            </div>
+                        </div>
+
+                        <div v-if="item.text.on_shop"
+                            style="width: 465px;height: 30px;margin-top: 45px;margin-left: 74px;display: flex;justify-content: right;">
+                            <div style="cursor: pointer;">
+                                <a class="FZMSTFW"
+                                    :href="`/page/personal detail/Personal Project Detail.html?id=${index}`" style="font-size: 25px;
+                            font-weight: 400;
+                            line-height: 35px;
+                            letter-spacing: 20%;
+                            text-align: right;
+                            text-decoration: underline 1px;
+                            text-decoration-style: solid;
+                            text-underline-offset: 8px;
+                            ">SHOP NOW</a>
+                            </div>
+                            <div style="cursor: pointer;">
+                                <p class="FZMSTFW"
+                                    :href="`/page/personal detail/Personal Project Detail.html?id=${index}`" style="font-size: 25px;
+                            font-weight: 400;
+                            line-height: normal;                       
+                            letter-spacing: 20%;
+                            text-align: right;
+                            ">→</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </template>
+    </div>
+
+
+
+
+
+    <div id="bottom-div"
+        style="width: 100%; height: 185px; background: #202020; border-radius: 80px 0px 0px 0px; bottom: 0px; display: flex; align-items: center;">
+        <div
+            style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; width: 100%;">
+            <img src="/img/main/Group 120.png" alt="俺的图图呢" style="width: 305px; margin-left: 150px;">
+            <div id="bottom-trigger" style="display: flex; align-items: center; gap: 40px; margin-right: 0px;">
+                <div>
+                    <p class="FZMSTFW3" style="font-size: 30px;color: #F3E6DA; margin: 0; transform: translateY(0px);">
+                        联系我们</p>
+                    <p class="SMILEYSANS"
+                        style="font-size: 18px;color: #F3E6DA; margin: 0; transform: translateY(-3px);">
+                        Contact Us</p>
+                </div>
+                <img src="/img/main/Group 121.png" alt="俺的图图呢"
+                    style="width: 276.95px; display: block; transform: translateY(0px);">
+            </div>
+        </div>
+    </div>
+    <!-- 底部抽屉栏 -->
+    <div id="bottom-drawer">
+        <div class="abs-div"></div>
+        <div class="abs-div2"></div>
+        <div
+            style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; width: 100%;">
+            <img src="/img/main/Group 120black.png" alt="俺的图图呢"
+                style="width: 256.54px; height:53.72px ;margin-top: -85px; margin-left: 90px;">
+        </div>
+        <div style="position: absolute; left: 50%; transform: translateX(-50%);">
+            <div
+                style="display: flex; flex-direction: row; position: absolute; left: 50%; transform: translateX(-50%); margin-top: 55px;">
+                <p class="CAROUSELPRO2" style="transform: translateY(-4px); font-size: 30px;">@</p>
+                <p class="CAROUSELPRO2" style="font-size: 30px;">Nero</p>
+            </div>
+            <p class="SMILEYSANS2" style=" margin-top: 30px;">NautilusDesign - 2025 - Zhejiang China</p>
+        </div>
+        <div class="bottom-contactus">
+            <div style="display: flex; flex-direction: row; align-items: flex-start; transform: translateX(70px);">
+                <div style="
+                    width: 125.5px;
+                    height: 2px;
+                    background: #F3E6DA;
+                    transform: rotate(-15deg);
+                    margin-top: 18px;">
+                </div>
+                <p class="FZMSTFW3" style="font-size: 40px; margin: 0 0 0 20px; letter-spacing: 0.2em">联系我们</p>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: flex-start; margin-top: 20px;">
+                <div style="display: flex; flex-direction: row; align-items: flex-start; margin-bottom: 30px;">
+                    <img src="/img/main/Group 121-qq.png" alt="俺的图图呢" style="height: 57px;">
+                    <p class="bottom-contactus-text">
+                        Personal QQ Number:<br>
+                        827060207<br>
+                        <span style="font-size: 22px;">（私人QQ，请备注来意）</span>
+                    </p>
+                </div>
+                <div style="display: flex; flex-direction: row; align-items: flex-start; margin-bottom: 30px;">
+                    <img src="/img/main/Group 121-qq group.png" alt="俺的图图呢" style="height: 57px;">
+                    <p class="bottom-contactus-text">
+                        QQ Group:<br>
+                        Now Loading...<br>
+                        <span style="font-size: 22px;">（QQ交流|下单群，欢迎加群）</span>
+                    </p>
+                </div>
+                <div style="display: flex; flex-direction: row; align-items: flex-start;">
+                    <img src="/img/main/Group 121-email.png" alt="俺的图图呢" style="height: 57px;">
+                    <p class="bottom-contactus-text">
+                        E-Mail:<br>
+                        827060207@qq.com<br>
+                        <span style="font-size: 22px;">（个人邮箱，有问题请留言）</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div id="bottom-close-trigger">
+            <div class="bottom-menu-line">
+                <div class="bottom-line" style="transform: rotate(-15deg);">
+                </div>
+                <div class="bottom-line" style="transform: rotate(15deg);">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="bottom"></div>
+
+
+
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                open_side_drawer: false,
+                small_img_src: "/img/project/", //小图文件夹头部
+                big_img_src: "/img/project720p/", //大图路径头部
+
+                project_json: [{
+                    transitionDirection: 'up',
+                    tag: "NEW",
+                    "little_img_src": {
+                        "src1": "crux45/3.png",
+                        "src2": "logo/1.png",
+                        "src3": "crux45/2.png",
+                        "src4": "crux45/1.png",
+                    },
+                    "big_img_src": "/img/project720p/" + "crux45/3.png",
+                    "text": {
+                        "title": "CRUX45",
+                        "project_type": "Keyboard.",
+                        "detail": `(套件)
+                        配列：45%
+                        外壳材质：铝
+                        配件：不锈钢PVD外配重
+
+                        南十字座（CRUX）为设计灵感，上盖和底部配重均刻有
+                        南十字座图案。
+                        搭配正面的指示灯和PVD配件，表达出星空的璀璨夺
+                        目。    `,
+                        on_shop: false
+                    }
+                },
+                {
+                    transitionDirection: 'up',
+                    tag: "",
+                    "little_img_src": {
+                        "src1": "crux45/2.png",
+                        "src2": "logo/1.png",
+                        "src3": "crux45/3.png",
+                        "src4": "crux45/1.png",
+                    },
+                    "big_img_src": "/img/project/crux45/2.png",
+                    "text": {
+                        "title": "CRUX45",
+                        "project_type": "Keyboard.",
+                        "detail": `(套件)
+                        配列：45%
+                        外壳材质：铝
+                        配件：不锈钢PVD外配重
+
+                        南十字座（CRUX）为设计灵感，上盖和底部配重均刻有
+                        南十字座图案。
+                        搭配正面的指示灯和PVD配件，表达出星空的璀璨夺
+                        目。`,
+                        on_shop: true
+                    }
+                },
+                {
+                    transitionDirection: 'up',
+                    tag: "",
+                    "little_img_src": {
+                        "src1": "damn60/1.png",
+                        "src2": "crux45/3.png",
+                        "src3": "crux45/2.png",
+                        "src4": "logo/1.png",
+                    },
+                    "big_img_src": "/img/project720p/" + "damn60/1.png",
+                    "text": {
+                        "title": "DAMN60",
+                        "project_type": "Keyboard.",
+                        "detail": `(套件)
+                        配列：45%
+                        外壳材质：铝
+                        配件：不锈钢PVD外配重
+
+                        南十字座（CRUX）为设计灵感，上盖和底部配重均刻有
+                        南十字座图案。
+                        搭配正面的指示灯和PVD配件，表达出星空的璀璨夺
+                        目。`,
+                        on_shop: true
+                    }
+                }
+                    /** 
+                     * 
+                     * 该页面要在此处添加新的项目
+                     * 复制以下代码到上方大括号后面，修改信息即可，产品的顺序要和detail页面中一致(重要)
+                     * 代码开始
+                     * 
+
+                        -------------------------------------------------------
+
+                        
+                        ,
+                        {
+                            transitionDirection: 'up',
+                            tag: "",
+                            "little_img_src": {
+                            "src1": "damn60/1.png",
+                            "src2": "crux45/3.png",
+                            "src3": "crux45/2.png",
+                            "src4": "logo/1.png",
+                        },
+                        "big_img_src": "/img/project720p/"  +  "damn60/1.png",
+                            "text": {
+                                "title": "DAMN60",
+                                "project_type": "Keyboard.",
+                                "detail": `(套件)
+                                配列：45%
+                                外壳材质：铝
+                                配件：不锈钢PVD外配重
+    
+                                南十字座（CRUX）为设计灵感，上盖和底部配重均刻有
+                                南十字座图案。
+                                搭配正面的指示灯和PVD配件，表达出星空的璀璨夺
+                                目。`,
+                                on_shop: true
+                            }
+                        }
+                        代码结束
+
+                        -------------------------------------------------------
+
+                        结构和字段说明如下
+                     
+                        ,   //逗号分割，必须有
+                        {
+                            transitionDirection: 'up', // 默认方向，首次无过渡可设为空字符串或 'up'
+                            tag: "NEW",     //小图左侧字段  
+                           "little_img_src": {
+                                "src1": "damn60/1.png",
+                                "src2": "crux45/3.png",
+                                "src3": "crux45/2.png",
+                                "src4": "logo/1.png",
+                            },
+                            "big_img_src": "/img/project720p/"  +  "damn60/1.png", //大图路径头部和big_img_src保持一致
+                            "text": {       //右侧文字
+                                "title": "DAMN60",      //产品标题
+                                "project_type": "Keyboard.",        //产品类型
+                                //详情,支持换行
+                                "detail": `(套件)
+                                配列：45%
+                                外壳材质：铝
+                                配件：不锈钢PVD外配重
+    
+                                南十字座（CRUX）为设计灵感，上盖和底部配重均刻有
+                                南十字座图案。
+                                搭配正面的指示灯和PVD配件，表达出星空的璀璨夺
+                                目。`,
+                                on_shop: true       //true：shop ，false: coming soon
+                            }
+                        }//此处不能有逗号，否则会出现空项目
+                    */
+                ]
+            },
+            created() {
+                this.project_json.forEach(item => {
+                    item.activeThumbIndex = 0; // 默认第一张高亮
+                });
+            },
+            methods: {
+                SwitchImg: function (imgIndex, itemIndex) {
+
+                    const project = this.project_json[itemIndex];
+                    const oldIndex = project.activeThumbIndex;
+
+                    // 点击同一张图，不做任何操作（也可选择不处理）
+                    if (imgIndex === oldIndex) return;
+
+                    // 根据点击位置设置滑动方向
+                    if (imgIndex < oldIndex) {
+                        // 点击的是上面的图 → 新图从上向下进入 → 使用 'down'
+                        project.transitionDirection = 'down';
+                    } else {
+                        // 点击的是下面的图 → 新图从下向上进入 → 使用 'up'
+                        project.transitionDirection = 'up';
+                    }
+
+                    const srcKey = `src${imgIndex + 1}`;
+                    const newSrc = project.little_img_src[srcKey];
+                    if (newSrc) {
+                        project.big_img_src = this.big_img_src + newSrc;
+                    }
+
+                    // 更新激活索引（触发 key 变化，开始过渡）
+                    project.activeThumbIndex = imgIndex;
+
+                    // 可选：过渡结束后清除方向（但保留到下次点击也可）
+                    // 如果需要，可以使用 $nextTick 或过渡钩子重置
+                }
+            }
+        });
+
+        document.querySelectorAll('a[href="#bottom"]').forEach(function (link) {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.getElementById('bottom').scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // 点击logo回到顶部
+        const topLogo = document.querySelector('.top-logo');
+        if (topLogo) {
+            topLogo.setAttribute('tabindex', '0');
+            topLogo.setAttribute('role', 'button');
+            topLogo.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+            topLogo.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            });
+        }
+
+        // 获取底部抽屉栏元素
+        const bottomdrawer = document.getElementById('bottom-drawer');
+        // 获取底部菜单触发区域元素
+        const bottomtrigger = document.getElementById('bottom-trigger');
+        // 打开底部抽屉函数：抽屉滑出
+        function opendrawer() {
+            bottomdrawer.style.bottom = '0px'; // 抽屉滑出
+        }
+        // 关闭底部抽屉函数：抽屉收回
+        function closedrawer() {
+            bottomdrawer.style.bottom = '-2000px'; // 抽屉收回
+        }
+        // 点击菜单触发区域，打开底部抽屉
+        bottomtrigger.addEventListener('click', function (e) {
+            e.preventDefault();
+            opendrawer();
+        });
+        // 在按下 ESC 时也关闭底部抽屉
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && bottomdrawer.style.bottom === '0px') {
+                closedrawer();
+            }
+        });
+        // 页面滚动时自动关闭底部抽屉
+        window.addEventListener('scroll', function () {
+            if (bottomdrawer.style.bottom === '0px') {
+                closedrawer();
+            }
+        });
+        // 点击页面其他区域，关闭底部抽屉（排除抽屉本身和菜单触发区域） 
+        document.addEventListener('click', function (e) {
+            console.log(e.target)
+            if (bottomdrawer.style.bottom === '0px' && !bottomdrawer.contains(e.target) && !bottomtrigger.contains(e.target)) {
+                closedrawer();
+            }
+        });
+        // 点击抽屉内关闭按钮，关闭底部抽屉
+        const bottomclosetrigger = document.getElementById('bottom-close-trigger');
+        if (bottomclosetrigger) {
+            bottomclosetrigger.addEventListener('click', function (e) {
+                e.preventDefault();
+                closedrawer();
+            });
+        }
+
+
+        // 获取底部联系我们元素
+        const bottomDiv = document.getElementById('bottom-div');
+        // 获取右侧抽屉栏元素
+        const sidebarDrawer = document.getElementById('sidebar-drawer');
+        // 获取菜单触发区域元素
+        const menuTrigger = document.getElementById('menu-trigger');
+        // 获取“关于我们”内容区域，用于抽屉打开时左移
+        const aboutUsContent = document.querySelector('div[id*="main-show"]');
+
+        // 打开抽屉函数：抽屉滑出，内容左移
+        function openDrawer() {
+            sidebarDrawer.style.right = '10px'; // 抽屉滑出
+            if (aboutUsContent) {
+                aboutUsContent.style.transition = 'transform 0.4s cubic-bezier(.4,0,.2,1)'; // 平滑动画
+                aboutUsContent.style.transform = 'translateX(-145px)'; // 内容左移
+            }
+            app.open_side_drawer = true;
+        }
+
+        // 关闭抽屉函数：抽屉收回，内容归位
+        function closeDrawer() {
+            sidebarDrawer.style.right = '-335px'; // 抽屉收回
+            if (aboutUsContent) {
+                aboutUsContent.style.transform = 'translateX(0px)'; // 内容归位
+            }
+            app.open_side_drawer = false;
+        }
+
+        // 点击菜单触发区域，打开抽屉
+        menuTrigger.addEventListener('click', function (e) {
+            e.preventDefault();
+            const result = adjustSidebarHeight();
+            openDrawer();
+        });
+
+        // 点击页面其他区域，关闭抽屉（排除抽屉本身和菜单触发区域） 
+        document.addEventListener('click', function (e) {
+            console.log(e.target)
+            if (sidebarDrawer.style.right === '10px' && !sidebarDrawer.contains(e.target) && !menuTrigger.contains(e.target)) {
+                closeDrawer();
+            }
+        });
+
+        // 点击抽屉内关闭按钮，关闭抽屉
+        const menuCloseTrigger = document.getElementById('menu-close-trigger');
+        if (menuCloseTrigger) {
+            menuCloseTrigger.addEventListener('click', function (e) {
+                e.preventDefault();
+                closeDrawer();
+            });
+        }
+
+        // 在按下 ESC 时也关闭抽屉
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && sidebarDrawer.style.right === '10px') {
+                closeDrawer();
+            }
+        });
+
+        // 页面滚动时自动关闭抽屉
+        window.addEventListener('scroll', function () {
+            if (sidebarDrawer.style.right === '10px') {
+                closeDrawer();
+            }
+        });
+
+        // 计算底部div露出的高度
+        function calculateBottomDivVisibleHeight() {
+            if (!bottomDiv) {
+                console.warn('未找到底部div元素');
+                return 0;
+            }
+
+            // 获取底部div的位置信息
+            const rect = bottomDiv.getBoundingClientRect();
+            const windowHeight = window.innerHeight;
+
+            // 计算底部div在视口中的可见部分高度
+            if (rect.top >= windowHeight) {
+                // 完全在视口下方，不可见
+                return 0;
+            } else if (rect.bottom <= 0) {
+                // 完全在视口上方，不可见
+                return 0;
+            } else {
+                // 部分或完全可见
+                const visibleTop = Math.max(rect.top, 0);
+                const visibleBottom = Math.min(rect.bottom, windowHeight);
+                return Math.max(0, visibleBottom - visibleTop);
+            }
+        }
+
+        // 动态调整sidebar-drawer高度
+        function adjustSidebarHeight() {
+            // 获取底部div露出的高度
+            const bottomDivVisibleHeight = calculateBottomDivVisibleHeight();
+
+            // 获取视口高度
+            const viewportHeight = window.innerHeight;
+
+            // 计算sidebar-drawer的新高度
+            let newHeight;
+
+            if (bottomDivVisibleHeight > 0) {
+                // 底部div可见时，保持8px间距
+                newHeight = viewportHeight - bottomDivVisibleHeight - 18;
+            } else {
+                // 底部div不可见时，与网页底部保持8px间距
+                newHeight = viewportHeight - 18;
+            }
+
+            // 确保高度不小于最小值
+            const minHeight = 200; // 最小高度200px
+            newHeight = Math.max(newHeight, minHeight);
+
+            // 应用新高度
+            sidebarDrawer.style.height = newHeight + 'px';
+            sidebarDrawer.style.maxHeight = newHeight + 'px';
+
+            // 输出调试信息
+            console.log('底部div可见高度:', bottomDivVisibleHeight + 'px');
+            console.log('sidebar-drawer新高度:', newHeight + 'px');
+            console.log('视口高度:', viewportHeight + 'px');
+
+            return {
+                bottomDivVisibleHeight: bottomDivVisibleHeight,
+                sidebarHeight: newHeight,
+                viewportHeight: viewportHeight
+            };
+        }
+
+        // 点击事件处理
+        function handleAdjustClick() {
+            // 调整高度
+            const result = adjustSidebarHeight();
+
+            // 显示调整结果
+            alert(`调整完成！\n底部div可见高度: ${result.bottomDivVisibleHeight}px\n侧边栏高度: ${result.sidebarHeight}px`);
+        }
+    </script>
+</body>
+
+</html>
