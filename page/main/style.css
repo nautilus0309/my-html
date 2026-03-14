@@ -1,19 +1,19 @@
 /* 字体定义 */
 @font-face {
     font-family: CAROUSELPRO;
-    src: url("/font/SMILEYSANS-OBLIQUE.OTF");
+    src: url("/my-html/font/SMILEYSANS-OBLIQUE.OTF");
     font-style: normal;
     font-weight: normal;
 }
 @font-face {
     font-family: FZMSTFW;
-    src: url(/font/FZMSTFW.TTF);
+    src: url("/my-html/font/FZMSTFW.TTF");
     font-style: normal;
     font-weight: normal;
 }
 @font-face {
     font-family: SMILEYSANS;
-    src: url(/font/SMILEYSANS-OBLIQUE.OTF);
+    src: url("/my-html/font/SMILEYSANS-OBLIQUE.OTF");
     font-style: normal;
     font-weight: normal;
 }
