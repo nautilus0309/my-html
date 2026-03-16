@@ -22,6 +22,7 @@
     </script>
     <!-- 生产环境版本，优化了尺寸和速度 -->
     <script src="/my-html/js/vue.min.js"></script>
+    <script src="/my-html/js/v-marquee.js"></script>  
 
 
 </head>
@@ -64,8 +65,8 @@
         </div>
         <div class="sidebar-text">
             <div class="sidebar-text-item">
-                <a class="FZMSTFW3 sidebar-text-link" style="font-size: 30px;" href="/my-html/page/main/main.html">首<span
-                        style="color: #202020;">首页</span>页</a>
+                <a class="FZMSTFW3 sidebar-text-link" style="font-size: 30px;"
+                    href="/my-html/page/main/main.html">首<span style="color: #202020;">首页</span>页</a>
                 <a class="SMILEYSANS2 sidebar-text-subtitle" style="font-size: 16px;"
                     href="/my-html/page/main/main.html">NautilusDesign</a>
             </div>
@@ -131,23 +132,32 @@
                                 style="width: 138.56px;height: 327px;display: flex;flex-direction: column;justify-content: space-between;">
                                 <!-- 小图 1 -->
                                 <div class="thumb-wrapper" :class="{ active: item.activeThumbIndex === 0 }">
-                                    <img class="little-img" :src="small_img_src + item.little_img_src.src1"
-                                        @click="SwitchImg(0, index)">
+                                    <img v-if="item.little_img_src.src1 != '' " class="little-img"
+                                        :src="small_img_src + item.little_img_src.src1" @click="SwitchImg(0, index)">
+                                    <div v-if="item.little_img_src.src1 == '' " class="little-img"
+                                        style="background-color: #202020;color: #20202000;">no_img</div>
                                 </div>
                                 <!-- 小图 2 -->
                                 <div class="thumb-wrapper" :class="{ active: item.activeThumbIndex === 1 }">
-                                    <img class="little-img" :src="small_img_src + item.little_img_src.src2"
-                                        @click="SwitchImg(1, index)">
+                                    <img v-if="item.little_img_src.src2 != '' " class="little-img"
+                                        :src="small_img_src + item.little_img_src.src2" @click="SwitchImg(1, index)">
+                                    <div v-if="item.little_img_src.src2 == '' " class="little-img"
+                                        style="background-color: #202020;color: #20202000;">no_img</div>
                                 </div>
                                 <!-- 小图 3 -->
                                 <div class="thumb-wrapper" :class="{ active: item.activeThumbIndex === 2 }">
-                                    <img class="little-img" :src="small_img_src + item.little_img_src.src3"
-                                        @click="SwitchImg(2, index)">
+                                    <img v-if="item.little_img_src.src3 != '' " class="little-img"
+                                        :src="small_img_src + item.little_img_src.src3" @click="SwitchImg(2, index)">
+                                    <div v-if="item.little_img_src.src3 == '' " class="little-img"
+                                        style="background-color: #202020;color: #20202000;">no_img</div>
+
                                 </div>
                                 <!-- 小图 4 -->
                                 <div class="thumb-wrapper" :class="{ active: item.activeThumbIndex === 3 }">
-                                    <img class="little-img" :src="small_img_src + item.little_img_src.src4"
-                                        @click="SwitchImg(3, index)">
+                                    <img v-if="item.little_img_src.src4 != '' " class="little-img"
+                                        :src="small_img_src + item.little_img_src.src4" @click="SwitchImg(3, index)">
+                                    <div v-if="item.little_img_src.src4 == '' " class="little-img"
+                                        style="background-color: #202020;color: #20202000;">no_img</div>
                                 </div>
                             </div>
                             <div id="big-img"
@@ -164,10 +174,9 @@
                     </div>
                     <!--右侧文字-->
                     <div class="project-text">
-                        <div style="width: 593px;height: 116px;">
-                            <a class="CAROUSELPRO" style="color: #202020;font-size: 100px;font-weight: 400;
-                        line-height: 116px;
-                            letter-spacing: 0.2em;">{{item.text.title}}</a>
+                        <div v-marquee style="width: 554px; height: 116px; white-space: nowrap; overflow: hidden;">
+                            <a class="CAROUSELPRO" style="color: #202020; font-size: 100px; font-weight: 400;display: block;
+                                 line-height: 116px; letter-spacing: 0.2em;">{{item.text.title}}</a>
                         </div>
                         <div style="width: 224px;height: 59px;margin-top: -14px;">
                             <a class="CAROUSELPRO" style="color: #202020;font-size: 50px;font-weight: 400;
@@ -215,7 +224,8 @@
                             style="width: 465px;height: 30px;margin-top: 45px;margin-left: 74px;display: flex;justify-content: right;">
                             <div style="cursor: pointer;">
                                 <a class="FZMSTFW"
-                                    :href="`/my-html/page/personal detail/Personal Project Detail.html?id=${index}`" style="font-size: 25px;
+                                    :href="`/my-html/page/personal detail/Personal Project Detail.html?id=${index}`"
+                                    style="font-size: 25px;
                             font-weight: 400;
                             line-height: 35px;
                             letter-spacing: 20%;
@@ -227,7 +237,8 @@
                             </div>
                             <div style="cursor: pointer;">
                                 <p class="FZMSTFW"
-                                    :href="`/my-html/page/personal detail/Personal Project Detail.html?id=${index}`" style="font-size: 25px;
+                                    :href="`/my-html/page/personal detail/Personal Project Detail.html?id=${index}`"
+                                    style="font-size: 25px;
                             font-weight: 400;
                             line-height: normal;                       
                             letter-spacing: 20%;
@@ -348,10 +359,12 @@
                     "little_img_src": {
                         "src1": "location55/1.png",
                         "src2": "location55/2.png",
+                        "src3": "",
+                        "src4": ""
                     },
                     "big_img_src": "/my-html/img/project/" + "location55/1.png",
                     "text": {
-                        "title": "LOCATION55",
+                        "title": "LOCATION55  ",
                         "project_type": "Keyboard.",
                         "detail": `(套件)
                         配列：50%异形ALICE
@@ -369,6 +382,7 @@
                         "src1": "damn60/2.png",
                         "src2": "damn60/1.png",
                         "src3": "damn60/3.png",
+                        "src4": ""
                     },
                     "big_img_src": "/my-html/img/project/" + "damn60/2.png",
                     "text": {
@@ -393,6 +407,7 @@
                         "src1": "muse/3.png",
                         "src2": "muse/1.png",
                         "src3": "muse/2.png",
+                        "src4": ""
                     },
                     "big_img_src": "/my-html/img/project/" + "muse/3.png",
                     "text": {
@@ -420,7 +435,7 @@
                     },
                     "big_img_src": "/my-html/img/project/" + "kingdom keeper/2.webp",
                     "text": {
-                        "title": "KINGDOM KEEPER",
+                        "title": "KINGDOM KEEPER  ",
                         "project_type": "Keycaps.",
                         "detail": `(键帽)
                         配列：BASE+40S+QAZ
