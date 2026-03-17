@@ -132,21 +132,24 @@
                                 <!-- 小图 1 -->
                                 <div class="thumb-wrapper" :class="{ active: item.activeThumbIndex === 0 }">
                                     <img v-if="item.little_img_src.src1 != '' " class="little-img"
-                                        :src="small_img_src + item.little_img_src.src1" @click="SwitchImg(0, index)">
+                                        :src="small_img_src + item.little_img_src.src1" @click="SwitchImg(0, index)"
+                                        @mouseenter="pauseAutoRotate(index)" @mouseleave="resumeAutoRotate(index)">
                                     <div v-if="item.little_img_src.src1 == '' " class="little-img"
                                         style="background-color: #202020;color: #20202000;">no_img</div>
                                 </div>
                                 <!-- 小图 2 -->
                                 <div class="thumb-wrapper" :class="{ active: item.activeThumbIndex === 1 }">
                                     <img v-if="item.little_img_src.src2 != '' " class="little-img"
-                                        :src="small_img_src + item.little_img_src.src2" @click="SwitchImg(1, index)">
+                                        :src="small_img_src + item.little_img_src.src2" @click="SwitchImg(1, index)"
+                                        @mouseenter="pauseAutoRotate(index)" @mouseleave="resumeAutoRotate(index)">
                                     <div v-if="item.little_img_src.src2 == '' " class="little-img"
                                         style="background-color: #202020;color: #20202000;">no_img</div>
                                 </div>
                                 <!-- 小图 3 -->
                                 <div class="thumb-wrapper" :class="{ active: item.activeThumbIndex === 2 }">
                                     <img v-if="item.little_img_src.src3 != '' " class="little-img"
-                                        :src="small_img_src + item.little_img_src.src3" @click="SwitchImg(2, index)">
+                                        :src="small_img_src + item.little_img_src.src3" @click="SwitchImg(2, index)"
+                                        @mouseenter="pauseAutoRotate(index)" @mouseleave="resumeAutoRotate(index)">
                                     <div v-if="item.little_img_src.src3 == '' " class="little-img"
                                         style="background-color: #202020;color: #20202000;">no_img</div>
 
@@ -154,7 +157,8 @@
                                 <!-- 小图 4 -->
                                 <div class="thumb-wrapper" :class="{ active: item.activeThumbIndex === 3 }">
                                     <img v-if="item.little_img_src.src4 != '' " class="little-img"
-                                        :src="small_img_src + item.little_img_src.src4" @click="SwitchImg(3, index)">
+                                        :src="small_img_src + item.little_img_src.src4" @click="SwitchImg(3, index)"
+                                        @mouseenter="pauseAutoRotate(index)" @mouseleave="resumeAutoRotate(index)">
                                     <div v-if="item.little_img_src.src4 == '' " class="little-img"
                                         style="background-color: #202020;color: #20202000;">no_img</div>
                                 </div>
@@ -351,8 +355,33 @@
                 open_side_drawer: false,
                 small_img_src: "/my-html/img/project720p/", //小图文件夹头部
                 big_img_src: "/my-html/img/project/", //大图路径头部
+                thumbRotationIntervalIds: {}, // 存储每个项目的自动轮换定时器ID，键为项目索引
 
                 project_json: [{
+                    transitionDirection: 'up',
+                    tag: "",
+                    "little_img_src": {
+                        "src1": "os40/2.png",
+                        "src2": "os40/1.png",
+                        "src3": "",
+                        "src4": ""
+                    },
+                    "big_img_src": "/my-html/img/project/" + "os40/2.png",
+                    "text": {
+                        "title": "OSSEUS40  ",
+                        "project_type": "Keyboard.",
+                        "detail": `(套件)
+                        配列：分体直列40%
+                        外壳材质：PC
+                        配件：紫铜铭牌
+
+                        小骷髅主题的PC大边框直列分体。O-RING结构。
+                        由于背板做了一个紫铜的可爱小骷髅铭牌，所以选用了一个源自拉丁语的形容词OSSEUS,意为骨质的。
+                    `,
+                        on_shop: false
+                    }
+                },
+                {
                     transitionDirection: 'up',
                     tag: "",
                     "little_img_src": {
@@ -546,25 +575,83 @@
                 ]
             },
             created() {
+                // 初始化每个项目默认显示第一张小图
                 this.project_json.forEach(item => {
                     item.activeThumbIndex = 0; // 默认第一张高亮
                 });
+                // 创建后立即开始自动轮播
+                this.startAutoRotate();
+            },
+            beforeDestroy() {
+                // 页面卸载前清理所有定时器，防止内存泄漏
+                Object.values(this.thumbRotationIntervalIds).forEach(id => clearInterval(id));
+                this.thumbRotationIntervalIds = {};
             },
             methods: {
-                SwitchImg: function (imgIndex, itemIndex) {
+                // 返回当前项目中存在的可用小图索引（0-based）
+                getAvailableThumbIndexes: function(project) {
+                    return [1, 2, 3, 4].filter(i => {
+                        const srcValue = project.little_img_src[`src${i}`];
+                        return srcValue && srcValue.trim() !== '';
+                    }).map(i => i - 1);
+                },
+                // 轮换当前项目的大图：按可用小图顺序轮转
+                rotateThumbs: function(itemIndex) {
+                    const project = this.project_json[itemIndex];
+                    const available = this.getAvailableThumbIndexes(project);
+                    if (!available.length) return; // 没有可用小图则跳过
 
+                    const oldActive = project.activeThumbIndex;
+                    let currentPos = available.indexOf(oldActive);
+                    if (currentPos < 0) currentPos = 0;
+                    const nextPos = (currentPos + 1) % available.length;
+                    const nextIndex = available[nextPos];
+                    this.SwitchImg(nextIndex, itemIndex);
+                },
+                // 启动自动轮换：每个项目单独一个定时器
+                startAutoRotate: function() {
+                    this.project_json.forEach((project, index) => {
+                        this.startAutoRotateForItem(index);
+                    });
+                },
+                // 为单个项目启动定时器
+                startAutoRotateForItem: function(itemIndex) {
+                    const project = this.project_json[itemIndex];
+                    const available = this.getAvailableThumbIndexes(project);
+                    if (available.length <= 1) return;
+
+                    // 如果已有定时器，先清除
+                    this.pauseAutoRotate(itemIndex);
+
+                    const timerId = setInterval(() => {
+                        this.rotateThumbs(itemIndex);
+                    }, 5000);
+                    this.thumbRotationIntervalIds[itemIndex] = timerId;
+                },
+                // 暂停当前项目轮换
+                pauseAutoRotate: function(itemIndex) {
+                    const timerId = this.thumbRotationIntervalIds[itemIndex];
+                    if (timerId) {
+                        clearInterval(timerId);
+                        delete this.thumbRotationIntervalIds[itemIndex];
+                    }
+                },
+                // 恢复当前项目轮换
+                resumeAutoRotate: function(itemIndex) {
+                    if (this.thumbRotationIntervalIds[itemIndex]) return; // 已在运行
+                    this.startAutoRotateForItem(itemIndex);
+                },
+                SwitchImg: function (imgIndex, itemIndex) {
                     const project = this.project_json[itemIndex];
                     const oldIndex = project.activeThumbIndex;
 
-                    // 点击同一张图，不做任何操作（也可选择不处理）
+                    // 点击同一张图，不做任何操作
                     if (imgIndex === oldIndex) return;
 
-                    // 根据点击位置设置滑动方向
+                    // 根据点击位置设置过渡方向
                     if (imgIndex < oldIndex) {
-                        // 点击的是上面的图 → 新图从上向下进入 → 使用 'down'
                         project.transitionDirection = 'down';
                     } else {
-                        // 点击的是下面的图 → 新图从下向上进入 → 使用 'up'
                         project.transitionDirection = 'up';
                     }
 
@@ -574,11 +661,8 @@
                         project.big_img_src = this.big_img_src + newSrc;
                     }
 
-                    // 更新激活索引（触发 key 变化，开始过渡）
+                    // 更新激活索引，触发大图 key 更新与过渡动作
                     project.activeThumbIndex = imgIndex;
-
-                    // 可选：过渡结束后清除方向（但保留到下次点击也可）
-                    // 如果需要，可以使用 $nextTick 或过渡钩子重置
                 }
             }
         });
