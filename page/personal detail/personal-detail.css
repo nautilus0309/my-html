@@ -753,7 +753,7 @@ body {
 /*4k大图相关*/
 .img-4k-container {
     width: 1703px;
-    height: calc(100vh - 191px);
+    height: 747px;
     background-color: #202020;
     display: flex;
     margin-top: calc(161px - 100vh);
@@ -787,7 +787,7 @@ body {
     height: 51px;
     align-self: flex-end;
     margin-left: 218px;
-    padding: 0 34px;
+    padding: 10px 34px;
     justify-content: space-between;
     z-index: 9999;
 }
@@ -800,7 +800,7 @@ body {
     align-self: flex-end;
     height: 43px;
     margin-left: 163px;
-    margin-bottom: 15px;
+    margin-bottom: 6px;
     transform: rotate(-90deg);
     transform-origin: left top;
 }
