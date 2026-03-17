@@ -616,6 +616,7 @@ body {
     border-radius: 47px 0px 47px 0px;
     width: 138.56px;
     height: 77.73px;
+    cursor: pointer;
 }
 
 .thumb-wrapper.active {
@@ -654,36 +655,39 @@ body {
 .slide-vertical-left-leave-active,
 .slide-vertical-right-enter-active,
 .slide-vertical-right-leave-active {
-  transition: transform 0.5s ease;
-  position: absolute;
-  width: 100%;
-  height: 100%;
+    transition: transform 0.5s ease;
+    position: absolute;
+    width: 100%;
+    height: 100%;
 }
 
 /* 向上滑动（新图从下进入，旧图向上离开） */
 .slide-vertical-left-enter {
-  transform: translateX(-100%);
+    transform: translateX(-100%);
 }
+
 .slide-vertical-left-leave-to {
-  transform: translateX(100%);
+    transform: translateX(100%);
 }
 
 /* 向下滑动（新图从上进入，旧图向下离开） */
 .slide-vertical-right-enter {
-  transform: translateX(100%);
+    transform: translateX(100%);
 }
+
 .slide-vertical-right-leave-to {
-  transform: translateX(-100%);
+    transform: translateX(-100%);
 }
 
 /* 可选：防止层级问题 */
 .slide-vertical-left-leave-active,
 .slide-vertical-right-leave-active {
-  z-index: 1;
+    z-index: 1;
 }
+
 .slide-vertical-left-enter-active,
 .slide-vertical-right-enter-active {
-  z-index: 2;
+    z-index: 2;
 }
 
 /*左侧小图样式*/
@@ -734,8 +738,67 @@ body {
     color: #F3E6DA;
     /* 选中文字 */
 }
+
 /*跑马灯样式*/
 @keyframes marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/*4k大图相关*/
+.img-4k-container {
+    width: 1703px;
+    height: calc(100vh - 191px);
+    background-color: #202020;
+    display: flex;
+    margin-top: calc(161px - 100vh);
+    z-index: 99999;
+    
+}
+
+.img-4k-block{
+    width: 1485px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-left: 218px;
+    margin-top: 21px;
+    z-index: 99999;
+}
+
+.img-4k {
+    width: 1485px;
+    height: 836px;
+    display: flex;
+    margin-top:-60px;
+    z-index: 99999;
+}
+
+.img-4k-buttons{
+    display: flex;
+    width: 1485px;
+    height: 51px;
+    align-self: flex-end;
+    margin-left: 218px;
+    padding: 0 34px;
+    justify-content: space-between;
+    z-index: 99999;
+}
+
+.title-4k {
+    display: flex;
+    position: absolute;
+    flex-direction: row;
+    align-items: flex-start;
+    align-self: flex-end;
+    height: 43px;
+    margin-left: 163px;
+    margin-bottom: 15px;
+    transform: rotate(-90deg);
+    transform-origin: left top;
 }

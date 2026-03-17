@@ -46,7 +46,7 @@
                     </div>
                 </div>
 
-                <div
+                <div v-if="!show_4k"
                     style="display: flex;text-align: left;z-index: 999999;background: #F3E6DA;margin-top: 90px;margin-bottom: 29px;width: 100%;">
                     <div id="project-title"
                         style="display: flex; flex-direction: row; align-items: flex-start;padding-left: 296px;    height: 43px;width: 302pxpx;">
@@ -71,6 +71,94 @@
                             letter-spacing: 20%;
                             text-decoration-thickness: 2px;
                             ">{{current_json[0].text.title}} 详情</a>
+                    </div>
+                </div>
+
+                <div  v-if="show_4k"
+                    style="height: calc(100vh - 21px);width: 100%;">
+                    <div class="img-4k-block" v-for="(item,index) in current_json"
+                        style="position: relative; overflow: hidden;background-color: #20202000;">
+                        <transition
+                            :name="item.transitionDirection ? 'slide-vertical-' + item.transitionDirection : ''">
+                            <img :key="item.img_src_4k" :src="item.img_src_4k" class="img-4k" loading="lazy"
+                                style="position: absolute; top: 0; left: 0; width: 100%; height: 897px; object-fit: cover;"
+                                alt="大图">
+                        </transition>
+                    </div>
+                    <div class="img-4k-container" v-if="show_4k">
+                        <!--左侧文字-->
+                        <div class="title-4k">
+                            <div
+                                style="width: 125.5px; height: 1.2px; background: #F3E6DA; transform:rotate(-15deg); margin-top: 19px;">
+                            </div>
+                            <a class="FZMSTFW" href="/my-html/page/personal/Personal Project.html" style="font-size: 35px; 
+                                margin: 5px 0px 0px 17px;
+                                font-weight: 400;
+                                font-style: Regular;
+                                line-height: 100%;
+                                letter-spacing: 20%;
+                                cursor: pointer;
+                                text-decoration-line: none;
+                                color: #F3E6DA;">个人项目 / </a>
+                            <a class="FZMSTFW" style="font-size: 35px; margin: 5px 0px 0 19px;
+                                text-decoration: underline;
+                                text-decoration-style: solid;
+                                text-underline-offset: 10px;
+                                font-weight: 400;
+                                font-style: Regular;
+                                line-height: 100%;
+                                letter-spacing: 20%;
+                                text-decoration-thickness: 2px;
+                                color: #F3E6DA;
+                                ">{{current_json[0].text.title}} 详情</a>
+                        </div>
+                        <!--右侧图片以及按钮-->
+                        <div class="img-4k-buttons">
+                            <div @click="SwitchImg4k(current_json[0].activeThumbIndex - 1)"
+                                style="cursor: pointer;display: flex;">
+                                <a class="FZMSTFW" style="font-size: 25px;
+                            font-weight: 400;
+                            line-height: 35px;
+                            letter-spacing: 20%;
+                            text-align: right;
+                            text-decoration: underline 1px;
+                            text-decoration-style: solid;
+                            text-underline-offset: 8px;
+                            color: #F3E6DA;
+                            ">←PREVIOUS</a>
+                            </div>
+
+                            <div    @click="close4k" 
+                            style="height: auto;margin-top: 13px;cursor: pointer;">
+                                <div class="line2" style="transform: rotate(-15deg);">
+                                </div>
+                                <div class="line2" style="transform: rotate(15deg);">
+                                </div>
+                            </div>
+
+                            <div @click="SwitchImg4k(current_json[0].activeThumbIndex + 1)"
+                                style="cursor: pointer;display: flex;">
+                                <a class="FZMSTFW" style="font-size: 25px;
+                            font-weight: 400;
+                            line-height: 35px;
+                            letter-spacing: 20%;
+                            text-align: right;
+                            text-decoration: underline 1px;
+                            text-decoration-style: solid;
+                            text-underline-offset: 8px;
+                            color: #F3E6DA;
+                            ">NEXT</a>
+                                <p class="FZMSTFW" style="font-size: 25px;
+                            font-weight: 400;
+                            line-height: normal;                       
+                            letter-spacing: 20%;
+                            text-align: right;
+                            color: #F3E6DA;
+                            margin-top: 3px;
+                            ">→</p>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
             </div>
@@ -117,16 +205,21 @@
             <div id="main-show"
                 style="width: 100%; height: auto;background: #F3E6DA; display: flex;flex-direction: column; margin-top: 192px; margin-left: 0;">
 
-                <div class="project-list" style="min-height: 939px;">
+                <div  v-if="show_4k"
+                 style="height: calc(100vh);margin-top: 0;color: #20202000;z-index: 0;">
+                    block
+                </div>
+
+                <div class="project-list" v-if="!show_4k" style="min-height: 939px;">
                     <!--单个项目展示-->
                     <div class="project-block" v-for="(item,index) in current_json">
                         <!--左侧图片-->
                         <div class="project-image">
-                            <div
+                            <div 
                                 style="width: 1056px;padding-top: 34px;padding-left: 296px;display: flex;flex-direction: column;">
 
-                                <div id="big-img"
-                                    style="width: 726px; height: 408px; position: relative; overflow: hidden;">
+                                <div id="big-img" @click="Open4K(item.activeThumbIndex)"
+                                    style="width: 726px; height: 408px; position: relative; overflow: hidden;cursor: pointer;">
                                     <transition
                                         :name="item.transitionDirection ? 'slide-vertical-' + item.transitionDirection : ''">
                                         <img :key="item.big_img_src" :src="item.big_img_src"
@@ -334,12 +427,14 @@
         var app = new Vue({
             el: '#app',
             data: {
+                show_4k: false, //大图展示，true开，false关
                 projectId: 0,
                 current_json: [],
                 final_price: 0,
                 open_side_drawer: false,
                 small_img_src: "/my-html/img/project720p/", //小图文件夹头部
                 big_img_src: "/my-html/img/project/", //大图路径头部
+                img_src_4k:"/my-html/img/project4k/",//
                 project_json: [
                     //第一把套件信息
                     {
@@ -351,6 +446,7 @@
                             "location55/2.png",
                         ],
                         "big_img_src": "/my-html/img/project/" + "location55/1.png",
+                        "img_src_4k":  "/my-html/img/project4k/" + "location55/1.png",
                         //右侧选项
                         "select": [
                             {
@@ -404,6 +500,7 @@
                             "damn60/3.png",
                         ],
                         "big_img_src": "/my-html/img/project/" + "damn60/2.png",
+                        "img_src_4k":  "/my-html/img/project4k/" + "damn60/2.png",
                         //右侧选项
                         "select": [
                             {
@@ -479,6 +576,7 @@
                             "crux45/5.png"
                         ],
                         "big_img_src": "/my-html/img/project/" + "crux45/1.png",
+                        "img_src_4k":  "/my-html/img/project4k/" + "crux45/1.png",
                         //右侧选项
                         "select": [
                             {
@@ -547,6 +645,7 @@
                             "kingdom keeper/1.png",
                         ],
                         "big_img_src": "/my-html/img/project/" + "kingdom keeper/2.webp",
+                        "img_src_4k":  "/my-html/img/project4k/" + "kingdom keeper/2.webp",
                         //右侧选项
                         "select": [
                             {
@@ -591,6 +690,7 @@
                             "crux45/5.png",
                         ],
                         "big_img_src": "/my-html/img/project/" + "crux45/1.png",
+                        "img_src_4k":  "/my-html/img/project4k/" + "crux45/1.png",
                         //右侧选项
                         "select": [
                             {
@@ -667,6 +767,7 @@
                             "/img/project/crux45/1.png",
                         ],
                         "big_img_src": "/img/project/damn60/1.png",
+                        "img_src_4k":  "/my-html/img/project4k/" + "crux45/1.png",
                         //右侧选项
                         "select": [
                             {
@@ -741,7 +842,8 @@
                             "/img/project/crux45/3.png",
                             "/img/project/crux45/1.png",
                         ],
-                        "big_img_src": "/img/project/damn60/1.png", //大图路径,和小图第一张保持图片内容一致
+                        "big_img_src": "/my-html/img/project/" + "crux45/1.png", //大图路径,和小图第一张保持图片内容一致
+                        "img_src_4k":  "/my-html/img/project4k/" + "crux45/1.png",
                         //右侧选项
                         "select": [//需要增加选项,就复制完整大括号,使用英文逗号分隔
                             {
@@ -812,6 +914,32 @@
                 this.current_json.push(JSON.parse(JSON.stringify(this.project_json[this.projectId])));
             },
             methods: {
+                SwitchImg4k: function (imgIndex) {
+                    
+                    const project = this.current_json[0];
+                    if (!project) return;
+                    if(imgIndex<0 || imgIndex>=project.little_img_src.length)return;
+                    const oldIndex = project.activeThumbIndex;
+
+                    // 点击同一张图，不做任何操作（也可选择不处理）
+                    if (imgIndex === oldIndex) return;
+
+                    // 根据点击位置设置滑动方向
+                    if (imgIndex < oldIndex) {
+                        // 点击的是前面的图 → 新图从上向下进入 → 使用 'down'
+                        project.transitionDirection = 'left';
+                    } else {
+                        // 点击的是后面的图 → 新图从下向上进入 → 使用 'up'
+                        project.transitionDirection = 'right';
+                    }
+
+                    const newSrc = project.little_img_src[imgIndex];
+                    if (newSrc) {
+                        project.img_src_4k = this.img_src_4k + newSrc;
+                    }
+                    // 更新当前项目选中的缩略图索引
+                    project.activeThumbIndex = imgIndex;
+                },
                 SwitchImg: function (imgIndex) {
                     const project = this.current_json[0];
                     if (!project) return;
@@ -858,6 +986,14 @@
                     }
                     // 触发自定义事件，将选中的项、索引和价格传递给父组件
                     this.final_price = price;
+                },
+                Open4K(img_index) {
+                    var img4k_src = this.current_json[0].little_img_src[img_index];
+                    this.show_4k = true;
+                    console.log("img_src", img4k_src);
+                },
+                close4k() {
+                    this.show_4k = false;
                 }
             }
         });
