@@ -74,24 +74,24 @@
                     </div>
                 </div>
 
-                <div  v-if="show_4k"
-                    style="height: calc(100vh - 21px);width: 100%;">
-                    <div class="img-4k-block" v-for="(item,index) in current_json"
+                <div v-if="show_4k"  @click="close4k"
+                    style="height: calc(100vh - 21px);width: 100%;position: relative;z-index: 901;">
+                    <div  class="img-4k-block" v-for="(item,index) in current_json" @click.stop
                         style="position: relative; overflow: hidden;background-color: #20202000;">
                         <transition
-                            :name="item.transitionDirection ? 'slide-vertical-' + item.transitionDirection : ''">
-                            <img :key="item.img_src_4k" :src="item.img_src_4k" class="img-4k" loading="eager"
+                            :name="current_json[0].transitionDirection ? 'slide-vertical-' + current_json[0].transitionDirection : ''">
+                            <img :key="current_json[0].img_src_4k" :src="current_json[0].img_src_4k" class="img-4k" loading="eager"
                                 style="position: absolute; top: 0; left: 0; width: 100%; height: 897px; object-fit: cover;"
                                 alt="大图">
                         </transition>
                     </div>
-                    <div class="img-4k-container" v-if="show_4k">
+                    <div class="img-4k-container" v-if="show_4k" @click.stop>
                         <!--左侧文字-->
                         <div class="title-4k">
                             <div
                                 style="width: 125.5px; height: 1.2px; background: #F3E6DA; transform:rotate(-15deg); margin-top: 19px;">
                             </div>
-                            <a class="FZMSTFW" href="/my-html/page/personal/Personal Project.html" style="font-size: 35px; 
+                            <a class="FZMSTFW" href="/my-html/page/personal/Personal Project.html" @click.stop style="font-size: 35px; 
                                 margin: 5px 0px 0px 17px;
                                 font-weight: 400;
                                 font-style: Regular;
@@ -100,7 +100,7 @@
                                 cursor: pointer;
                                 text-decoration-line: none;
                                 color: #F3E6DA;">个人项目 / </a>
-                            <a class="FZMSTFW" style="font-size: 35px; margin: 5px 0px 0 19px;
+                            <a class="FZMSTFW" @click.stop style="font-size: 35px; margin: 5px 0px 0 19px; 
                                 text-decoration: underline;
                                 text-decoration-style: solid;
                                 text-underline-offset: 10px;
@@ -114,7 +114,7 @@
                         </div>
                         <!--右侧图片以及按钮-->
                         <div class="img-4k-buttons">
-                            <div @click="SwitchImg4k(current_json[0].activeThumbIndex - 1)"
+                            <div @click.stop="SwitchImg4k(current_json[0].activeThumbIndex - 1)"
                                 style="cursor: pointer;display: flex;">
                                 <a class="FZMSTFW" style="font-size: 25px;
                             font-weight: 400;
@@ -128,15 +128,15 @@
                             ">←PREVIOUS</a>
                             </div>
 
-                            <div    @click="close4k" 
-                            style="height: auto;margin-top: 13px;cursor: pointer;">
+                            <div    @click.stop="close4k" 
+                            style="height: auto;padding-top: 13px;cursor: pointer;">
                                 <div class="line2" style="transform: rotate(-15deg);">
                                 </div>
                                 <div class="line2" style="transform: rotate(15deg);">
                                 </div>
                             </div>
 
-                            <div @click="SwitchImg4k(current_json[0].activeThumbIndex + 1)"
+                            <div @click.stop="SwitchImg4k(current_json[0].activeThumbIndex + 1)"
                                 style="cursor: pointer;display: flex;">
                                 <a class="FZMSTFW" style="font-size: 25px;
                             font-weight: 400;
@@ -333,7 +333,7 @@
 
 
 
-            <div id="bottom-div"
+            <div id="bottom-div" v-if="!show_4k"
                 style="width: 100%; height: 185px; background: #202020; border-radius: 80px 0px 0px 0px; bottom: 0px; display: flex; align-items: center;">
                 <div
                     style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; width: 100%;">
@@ -417,7 +417,7 @@
                     </div>
                 </div>
             </div>
-            <div id="bottom"></div>
+            <div id="bottom" v-if="!show_4k"></div>
         </div>
     </template>
 
@@ -918,7 +918,12 @@
                     
                     const project = this.current_json[0];
                     if (!project) return;
-                    if(imgIndex<0 || imgIndex>=project.little_img_src.length)return;
+                    if(imgIndex<0){
+                        imgIndex = project.little_img_src.length - 1;
+                    }
+                    if(imgIndex>=project.little_img_src.length){
+                        imgIndex = 0;
+                    };
                     const oldIndex = project.activeThumbIndex;
 
                     // 点击同一张图，不做任何操作（也可选择不处理）
@@ -935,6 +940,7 @@
 
                     const newSrc = project.little_img_src[imgIndex];
                     if (newSrc) {
+                        project.big_img_src = this.big_img_src + newSrc;
                         project.img_src_4k = this.img_src_4k + newSrc;
                     }
                     // 更新当前项目选中的缩略图索引
@@ -960,6 +966,7 @@
                     const newSrc = project.little_img_src[imgIndex];
                     if (newSrc) {
                         project.big_img_src = this.big_img_src + newSrc;
+                        project.img_src_4k = this.img_src_4k + newSrc;
                     }
                     // 更新当前项目选中的缩略图索引
                     project.activeThumbIndex = imgIndex;
@@ -1078,8 +1085,11 @@
 
         const projectTitle = document.querySelector('div[id*="project-title"]');
 
+        const img4k_div = document.querySelector('div[id*="img-kkkk"]');
+
         // 打开抽屉函数：抽屉滑出，内容左移
         function openDrawer() {
+            if(app.show_4k == true)return;
             sidebarDrawer.style.right = '10px'; // 抽屉滑出
             if (aboutUsContent) {
                 aboutUsContent.style.transition = 'transform 0.4s cubic-bezier(.4,0,.2,1)'; // 平滑动画
@@ -1094,6 +1104,7 @@
 
         // 关闭抽屉函数：抽屉收回，内容归位
         function closeDrawer() {
+            if(app.show_4k == true)return;
             sidebarDrawer.style.right = '-335px'; // 抽屉收回
             if (aboutUsContent) {
                 aboutUsContent.style.transform = 'translateX(0px)'; // 内容归位

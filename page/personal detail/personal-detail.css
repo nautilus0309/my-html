@@ -757,7 +757,8 @@ body {
     background-color: #202020;
     display: flex;
     margin-top: calc(161px - 100vh);
-    z-index: 99999;
+    position: absolute;
+    z-index: 3999;
     
 }
 
@@ -768,7 +769,7 @@ body {
     flex-direction: column;
     margin-left: 218px;
     margin-top: 21px;
-    z-index: 99999;
+    z-index: auto;
 }
 
 .img-4k {
@@ -776,18 +777,19 @@ body {
     height: 836px;
     display: flex;
     margin-top:-60px;
-    z-index: 99999;
+    z-index: 9999;
 }
 
 .img-4k-buttons{
     display: flex;
+    position: absolute;
     width: 1485px;
     height: 51px;
     align-self: flex-end;
     margin-left: 218px;
     padding: 0 34px;
     justify-content: space-between;
-    z-index: 99999;
+    z-index: 9999;
 }
 
 .title-4k {
