@@ -836,7 +836,7 @@ body {
 
 /* 进入初始状态：从上方完全移出 */
 .slide-down-enter {
-    transform: translateY(-100%);
+    transform: translateY(100%);
 }
 
 /* 进入结束状态：回到原位（默认值，可省略） */
@@ -851,7 +851,7 @@ body {
 
 /* 离开结束状态：向上完全移出 */
 .slide-down-leave-to {
-    transform: translateY(-140%);
+    transform: translateY(100%);
 }
 
 
@@ -862,7 +862,7 @@ body {
 }
 
 .fade-enter {
-    opacity: 0.9;
+    opacity: 0;
 }
 
 .fade2-enter-active {
