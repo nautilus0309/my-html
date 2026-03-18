@@ -775,7 +775,7 @@ body {
 
 .img-4k-block {
     width: 1485px;
-    height: 100%;
+    height: 836px;
     display: flex;
     flex-direction: column;
     margin-left: 218px;
@@ -796,7 +796,6 @@ body {
     position: absolute;
     width: 1485px;
     height: 51px;
-    align-self: flex-end;
     margin-left: 218px;
     padding: 10px 34px;
     justify-content: space-between;
@@ -879,5 +878,5 @@ body {
 }
 
 .fade2-leave-to {
-    opacity: 0;
+    opacity: 0.8;
 }

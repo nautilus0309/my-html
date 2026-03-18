@@ -48,7 +48,7 @@
                 </div>
 <transition name="slide-down">
                 <div v-if="show_4k"  @click="close4k"
-                    style="height: calc(100vh - 21px);width: 100%;position: relative;z-index: 901;">
+                    style="height: calc(100vh - 21px);width: 100%;position: relative;z-index: 901;display: flex;flex-direction: column;">
                     <div  class="img-4k-block" v-for="(item,index) in current_json" @click.stop
                         style="position: relative; overflow: hidden;background-color: #20202000;">
                         <transition
@@ -58,7 +58,7 @@
                                 alt="大图">
                         </transition>
                     </div>
-                    <div class="img-4k-container" v-if="show_4k" @click.stop>
+                    <div class="img-4k-container" style="margin-top: 161px;" v-if="show_4k" @click.stop>
                         <!--左侧文字-->
                         <div class="title-4k" >
                             <div 
@@ -91,6 +91,10 @@
                                     ">{{current_json[0].text.title2}} 详情    </a>
                                 </div>
                         </div>
+                        
+                    </div>
+                    
+                    <div style="height: calc(100% - 857px);width: 1703px;background-color: #202020;display: flex;margin-top: 0px;">
                         <!--右侧图片以及按钮-->
                         <div class="img-4k-buttons">
                             <div @click.stop="SwitchImg4k(current_json[0].activeThumbIndex - 1)"
@@ -138,8 +142,9 @@
                             </div>
 
                         </div>
-                        <div class="black-block">kk</div>
                     </div>
+                    
+
                 </div>
                 </transition>
 <transition name="fade">
