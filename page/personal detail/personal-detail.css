@@ -276,7 +276,7 @@ body {
     height: 65px;
     border: none;
     cursor: pointer;
-    z-index: 10000;
+    z-index: 999;
     pointer-events: auto;
     transform: translateX(-150px);
 }
@@ -291,7 +291,7 @@ body {
     height: 22px;
     border: none;
     cursor: pointer;
-    z-index: 999999;
+    z-index: 9998;
     pointer-events: auto;
     transform: translateX(37.5px);
 }
@@ -750,6 +750,17 @@ body {
     }
 }
 
+/*跑马灯样式*/
+@keyframes marquee2 {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
 /*4k大图相关*/
 .img-4k-container {
     width: 1703px;
@@ -759,10 +770,10 @@ body {
     margin-top: calc(161px - 100vh);
     position: absolute;
     z-index: 3999;
-    
+
 }
 
-.img-4k-block{
+.img-4k-block {
     width: 1485px;
     height: 100%;
     display: flex;
@@ -776,11 +787,11 @@ body {
     width: 1485px;
     height: 836px;
     display: flex;
-    margin-top:-60px;
+    margin-top: -60px;
     z-index: 9999;
 }
 
-.img-4k-buttons{
+.img-4k-buttons {
     display: flex;
     position: absolute;
     width: 1485px;
@@ -803,4 +814,70 @@ body {
     margin-bottom: 6px;
     transform: rotate(-90deg);
     transform-origin: left top;
+}
+
+.black-block {
+    position: absolute;
+    background-color: #202020;
+    color: #F3E6DA00;
+    display: flex;
+    width: 100%;
+    height: 2%;
+    margin-top: 746px;
+    justify-content: space-between;
+    z-index: 9999;
+}
+
+/*大图下移*/
+.slide-down-enter-active,
+.slide-down-leave-active {
+    transition: transform 0.4s ease;
+}
+
+/* 进入初始状态：从上方完全移出 */
+.slide-down-enter {
+    transform: translateY(-100%);
+}
+
+/* 进入结束状态：回到原位（默认值，可省略） */
+.slide-down-enter-to {
+    transform: translateY(0);
+}
+
+/* 离开初始状态：原位（默认值，可省略） */
+.slide-down-leave {
+    transform: translateY(0);
+}
+
+/* 离开结束状态：向上完全移出 */
+.slide-down-leave-to {
+    transform: translateY(-140%);
+}
+
+
+
+
+.fade-enter-active {
+    transition: opacity 2s;
+}
+
+.fade-enter {
+    opacity: 0.9;
+}
+
+.fade2-enter-active {
+    transition: opacity 0.5s;
+}
+
+.fade2-enter {
+    opacity: 0.9;
+}
+
+/* 可选：离开动画（如果需要） */
+.fade2-leave-active {
+    transition: opacity 5s;
+}
+
+.fade2-leave-to {
+    opacity: 0;
 }

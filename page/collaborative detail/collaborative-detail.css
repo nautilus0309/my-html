@@ -8,14 +8,14 @@
 
 @font-face {
     font-family: FZMSTFW;
-    src: url("/my-html/font/FZMSTFW.TTF");
+    src: url(/my-html/font/FZMSTFW.TTF);
     font-style: normal;
     font-weight: normal;
 }
 
 @font-face {
     font-family: SMILEYSANS;
-    src: url("/my-html/font/SMILEYSANS-OBLIQUE.OTF");
+    src: url(/my-html/font/SMILEYSANS-OBLIQUE.OTF);
     font-style: normal;
     font-weight: normal;
 }
@@ -71,7 +71,7 @@ body {
 }
 
 /* 导航栏样式 */
-.navbar {
+#navbar {
     position: fixed;
     top: 0;
     left: 0;
@@ -276,7 +276,7 @@ body {
     height: 65px;
     border: none;
     cursor: pointer;
-    z-index: 10000;
+    z-index: 999;
     pointer-events: auto;
     transform: translateX(-150px);
 }
@@ -291,7 +291,7 @@ body {
     height: 22px;
     border: none;
     cursor: pointer;
-    z-index: 999999;
+    z-index: 9998;
     pointer-events: auto;
     transform: translateX(37.5px);
 }
@@ -616,6 +616,7 @@ body {
     border-radius: 47px 0px 47px 0px;
     width: 138.56px;
     height: 77.73px;
+    cursor: pointer;
 }
 
 .thumb-wrapper.active {
@@ -654,36 +655,39 @@ body {
 .slide-vertical-left-leave-active,
 .slide-vertical-right-enter-active,
 .slide-vertical-right-leave-active {
-  transition: transform 0.5s ease;
-  position: absolute;
-  width: 100%;
-  height: 100%;
+    transition: transform 0.5s ease;
+    position: absolute;
+    width: 100%;
+    height: 100%;
 }
 
 /* 向上滑动（新图从下进入，旧图向上离开） */
 .slide-vertical-left-enter {
-  transform: translateX(-100%);
+    transform: translateX(-100%);
 }
+
 .slide-vertical-left-leave-to {
-  transform: translateX(100%);
+    transform: translateX(100%);
 }
 
 /* 向下滑动（新图从上进入，旧图向下离开） */
 .slide-vertical-right-enter {
-  transform: translateX(100%);
+    transform: translateX(100%);
 }
+
 .slide-vertical-right-leave-to {
-  transform: translateX(-100%);
+    transform: translateX(-100%);
 }
 
 /* 可选：防止层级问题 */
 .slide-vertical-left-leave-active,
 .slide-vertical-right-leave-active {
-  z-index: 1;
+    z-index: 1;
 }
+
 .slide-vertical-left-enter-active,
 .slide-vertical-right-enter-active {
-  z-index: 2;
+    z-index: 2;
 }
 
 /*左侧小图样式*/
@@ -737,6 +741,143 @@ body {
 
 /*跑马灯样式*/
 @keyframes marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/*跑马灯样式*/
+@keyframes marquee2 {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/*4k大图相关*/
+.img-4k-container {
+    width: 1703px;
+    height: 747px;
+    background-color: #202020;
+    display: flex;
+    margin-top: calc(161px - 100vh);
+    position: absolute;
+    z-index: 3999;
+
+}
+
+.img-4k-block {
+    width: 1485px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-left: 218px;
+    margin-top: 21px;
+    z-index: auto;
+}
+
+.img-4k {
+    width: 1485px;
+    height: 836px;
+    display: flex;
+    margin-top: -60px;
+    z-index: 9999;
+}
+
+.img-4k-buttons {
+    display: flex;
+    position: absolute;
+    width: 1485px;
+    height: 51px;
+    align-self: flex-end;
+    margin-left: 218px;
+    padding: 10px 34px;
+    justify-content: space-between;
+    z-index: 9999;
+}
+
+.title-4k {
+    display: flex;
+    position: absolute;
+    flex-direction: row;
+    align-items: flex-start;
+    align-self: flex-end;
+    height: 43px;
+    margin-left: 163px;
+    margin-bottom: 6px;
+    transform: rotate(-90deg);
+    transform-origin: left top;
+}
+
+.black-block {
+    position: absolute;
+    background-color: #202020;
+    color: #F3E6DA00;
+    display: flex;
+    width: 100%;
+    height: 2%;
+    margin-top: 746px;
+    justify-content: space-between;
+    z-index: 9999;
+}
+
+/*大图下移*/
+.slide-down-enter-active,
+.slide-down-leave-active {
+    transition: transform 0.4s ease;
+}
+
+/* 进入初始状态：从上方完全移出 */
+.slide-down-enter {
+    transform: translateY(-100%);
+}
+
+/* 进入结束状态：回到原位（默认值，可省略） */
+.slide-down-enter-to {
+    transform: translateY(0);
+}
+
+/* 离开初始状态：原位（默认值，可省略） */
+.slide-down-leave {
+    transform: translateY(0);
+}
+
+/* 离开结束状态：向上完全移出 */
+.slide-down-leave-to {
+    transform: translateY(-140%);
+}
+
+
+
+
+.fade-enter-active {
+    transition: opacity 2s;
+}
+
+.fade-enter {
+    opacity: 0.9;
+}
+
+.fade2-enter-active {
+    transition: opacity 0.5s;
+}
+
+.fade2-enter {
+    opacity: 0.9;
+}
+
+/* 可选：离开动画（如果需要） */
+.fade2-leave-active {
+    transition: opacity 5s;
+}
+
+.fade2-leave-to {
+    opacity: 0;
 }

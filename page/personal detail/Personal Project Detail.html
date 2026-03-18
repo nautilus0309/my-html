@@ -23,15 +23,16 @@
     <!-- 生产环境版本，优化了尺寸和速度 -->
     <script src="/my-html/js/vue.min.js"></script>
     <script src="/my-html/js/v-marquee.js"></script>
+    <script src="/my-html/js/v-marquee2.js"></script>
 
 </head>
 
 <body>
     <template id="app">
         <div>
-            <div id="navbar" class="navbar-show">
+            <div id="navbar" class="navbar-show" style=" background-color:transparent">
                 <div class="navbar-container">
-                    <div id="top-fixed-group">
+                    <div id="top-fixed-group" :style="{ backgroundColor: show_4k ? 'transparent' : '#F3E6DA' }" style="height: 192px;">
                         <img src="/my-html/img/main/Union.png" alt="俺的图图呢" class="top-logo" style="cursor: pointer;">
                         <div id="menu-trigger">
                             <div class="menu-text">
@@ -45,35 +46,7 @@
                         </div>
                     </div>
                 </div>
-
-                <div v-if="!show_4k"
-                    style="display: flex;text-align: left;z-index: 999999;background: #F3E6DA;margin-top: 90px;margin-bottom: 29px;width: 100%;">
-                    <div id="project-title"
-                        style="display: flex; flex-direction: row; align-items: flex-start;padding-left: 296px;    height: 43px;width: 302pxpx;">
-                        <div
-                            style="width: 125.5px; height: 1.2px; background: #202020; transform:rotate(-15deg); margin-top: 19px;">
-                        </div>
-                        <a class="FZMSTFW" href="/my-html/page/personal/Personal Project.html" style="font-size: 35px; 
-                            margin: 5px 0px 0px 17px;
-                            font-weight: 400;
-                            font-style: Regular;
-                            line-height: 100%;
-                            letter-spacing: 20%;
-                            cursor: pointer;
-                            text-decoration-line: none;">个人项目 / </a>
-                        <a class="FZMSTFW" style="font-size: 35px; margin: 5px 0px 0 19px;
-                            text-decoration: underline;
-                            text-decoration-style: solid;
-                            text-underline-offset: 10px;
-                            font-weight: 400;
-                            font-style: Regular;
-                            line-height: 100%;
-                            letter-spacing: 20%;
-                            text-decoration-thickness: 2px;
-                            ">{{current_json[0].text.title}} 详情</a>
-                    </div>
-                </div>
-
+<transition name="slide-down">
                 <div v-if="show_4k"  @click="close4k"
                     style="height: calc(100vh - 21px);width: 100%;position: relative;z-index: 901;">
                     <div  class="img-4k-block" v-for="(item,index) in current_json" @click.stop
@@ -87,9 +60,10 @@
                     </div>
                     <div class="img-4k-container" v-if="show_4k" @click.stop>
                         <!--左侧文字-->
-                        <div class="title-4k">
-                            <div
-                                style="width: 125.5px; height: 1.2px; background: #F3E6DA; transform:rotate(-15deg); margin-top: 19px;">
+                        <div class="title-4k" >
+                            <div 
+                                style="width: 125.5px; height: 1.2px; background: #F3E6DA; 
+                                transform:rotate(-15deg); margin-top: 19px;">
                             </div>
                             <a class="FZMSTFW" href="/my-html/page/personal/Personal Project.html" @click.stop style="font-size: 35px; 
                                 margin: 5px 0px 0px 17px;
@@ -100,17 +74,22 @@
                                 cursor: pointer;
                                 text-decoration-line: none;
                                 color: #F3E6DA;">个人项目 / </a>
-                            <a class="FZMSTFW" @click.stop style="font-size: 35px; margin: 5px 0px 0 19px; 
-                                text-decoration: underline;
-                                text-decoration-style: solid;
-                                text-underline-offset: 10px;
-                                font-weight: 400;
-                                font-style: Regular;
-                                line-height: 100%;
-                                letter-spacing: 20%;
-                                text-decoration-thickness: 2px;
-                                color: #F3E6DA;
-                                ">{{current_json[0].text.title}} 详情</a>
+
+                                <div v-marquee2 style="display: inline-block ;width: 300px;
+                                    white-space: nowrap; 
+                                    overflow: hidden;">
+                                <a class="FZMSTFW" @click.stop style="font-size: 35px; margin: 5px 0px 0 19px; display: block;
+                                    text-decoration: underline;
+                                    text-decoration-style: solid;
+                                    text-underline-offset: 10px;
+                                    font-weight: 400;
+                                    font-style: Regular;
+                                    line-height: 100%;
+                                    letter-spacing: 20%;
+                                    text-decoration-thickness: 2px;
+                                    color: #F3E6DA;
+                                    ">{{current_json[0].text.title2}} 详情    </a>
+                                </div>
                         </div>
                         <!--右侧图片以及按钮-->
                         <div class="img-4k-buttons">
@@ -159,8 +138,40 @@
                             </div>
 
                         </div>
+                        <div class="black-block">kk</div>
                     </div>
                 </div>
+                </transition>
+<transition name="fade">
+                <div v-show="!show_4k"
+                    style="display: flex;text-align: left;z-index: 900;background: #F3E6DA;margin-top: 90px;margin-bottom: 29px;width: 100%;">
+                    <div id="project-title"
+                        style="display: flex; flex-direction: row; align-items: flex-start;padding-left: 296px;    height: 43px;width: 302pxpx;">
+                        <div
+                            style="width: 125.5px; height: 1.2px; background: #202020; transform:rotate(-15deg); margin-top: 19px;">
+                        </div>
+                        <a class="FZMSTFW" href="/my-html/page/personal/Personal Project.html" style="font-size: 35px; 
+                            margin: 5px 0px 0px 17px;
+                            font-weight: 400;
+                            font-style: Regular;
+                            line-height: 100%;
+                            letter-spacing: 20%;
+                            cursor: pointer;
+                            text-decoration-line: none;">个人项目 / </a>
+                        <a class="FZMSTFW" style="font-size: 35px; margin: 5px 0px 0 19px;
+                            text-decoration: underline;
+                            text-decoration-style: solid;
+                            text-underline-offset: 10px;
+                            font-weight: 400;
+                            font-style: Regular;
+                            line-height: 100%;
+                            letter-spacing: 20%;
+                            text-decoration-thickness: 2px;
+                            ">{{current_json[0].text.title}} 详情</a>
+                    </div>
+                </div>
+</transition>
+
             </div>
 
 
@@ -204,12 +215,12 @@
             </div>
             <div id="main-show"
                 style="width: 100%; height: auto;background: #F3E6DA; display: flex;flex-direction: column; margin-top: 192px; margin-left: 0;">
-
+                <!--
                 <div  v-if="show_4k"
-                 style="height: calc(100vh);margin-top: 0;color: #20202000;z-index: 0;">
+                 style="height: calc(50vh);margin-top: 0;color: #20202000;z-index: 0;">
                     block
-                </div>
-
+                </div>-->
+<transition name="fade2">
                 <div class="project-list" v-if="!show_4k" style="min-height: 939px;">
                     <!--单个项目展示-->
                     <div class="project-block" v-for="(item,index) in current_json">
@@ -326,14 +337,14 @@
 
 
                 </div>
-
+</transition>
             </div>
 
 
 
 
 
-            <div id="bottom-div" v-if="!show_4k"
+            <div id="bottom-div" :style="{ backgroundColor: show_4k ? 'transparent' : '#202020' }"
                 style="width: 100%; height: 185px; background: #202020; border-radius: 80px 0px 0px 0px; bottom: 0px; display: flex; align-items: center;">
                 <div
                     style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; width: 100%;">
@@ -417,7 +428,7 @@
                     </div>
                 </div>
             </div>
-            <div id="bottom" v-if="!show_4k"></div>
+            <div id="bottom" ></div>
         </div>
     </template>
 
@@ -434,7 +445,7 @@
                 open_side_drawer: false,
                 small_img_src: "/my-html/img/project720p/", //小图文件夹头部
                 big_img_src: "/my-html/img/project/", //大图路径头部
-                img_src_4k:"/my-html/img/project4k/",//
+                img_src_4k:"/my-html/img/project/",//
                 project_json: [
                     //第一把套件信息
                     {
@@ -471,7 +482,9 @@
                         ],
                         //右侧文字
                         "text": {
-                            "title": "LOCATION55  ",
+                            "title": "LOCATION55  ",//右侧大标题用 超长需要空格
+
+                            "title2": "LOCATION55",//下滑大图用 超长不需要空格
 
                             "project_type": "Keyboard.",
 
@@ -534,7 +547,9 @@
                         ],
                         //右侧文字
                         "text": {
-                            "title": "CRUX45",
+                            "title": "DAMN60",//右侧大标题用 超长需要空格
+
+                            "title2": "DAMN60",//下滑大图用 超长不需要空格
 
                             "project_type": "Keyboard.",
 
@@ -610,7 +625,9 @@
                         ],
                         //右侧文字
                         "text": {
-                            "title": "CRUX45",
+                            "title": "CRUX45",//右侧大标题用 超长需要空格
+
+                            "title2": "CRUX45",//下滑大图用 超长不需要空格
 
                             "project_type": "Keyboard.",
 
@@ -658,7 +675,9 @@
                         ],
                         //右侧文字
                         "text": {
-                            "title": "KING",
+                            "title": "KING",//右侧大标题用 超长需要空格
+
+                            "title2": "KING",//下滑大图用 超长不需要空格
 
                             "project_type": "Keycaps.",
 
@@ -729,7 +748,9 @@
                         ],
                         //右侧文字
                         "text": {
-                            "title": "CRUX45",
+                            "title": "CRUX45",//右侧大标题用 超长需要空格
+
+                            "title2": "CRUX45",//下滑大图用 超长不需要空格
 
                             "project_type": "Keyboard.",
 
@@ -801,7 +822,9 @@
                         ],
                         //右侧文字
                         "text": {
-                            "title": "DAMN60",
+                            "title": "DAMN60",//右侧大标题用 超长需要空格
+
+                            "title2": "DAMN60",//下滑大图用 超长不需要空格
 
                             "project_type": "Keyboard.",
 
@@ -877,7 +900,9 @@
                         ],
                         //右侧文字
                         "text": {
-                            "title": "DAMN60", //标题
+                            "title": "DAMN60", //标题 右侧大标题用 超长需要空格
+
+                            "title2": "DAMN60",//下滑大图用 超长不需要空格
 
                             "project_type": "Keyboard.", //产品类型
                             //详情,支持回车换行
