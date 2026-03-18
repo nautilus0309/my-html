@@ -875,7 +875,7 @@ body {
 
 /* 可选：离开动画（如果需要） */
 .fade2-leave-active {
-    transition: opacity 5s;
+    transition: opacity 0.5s;
 }
 
 .fade2-leave-to {
