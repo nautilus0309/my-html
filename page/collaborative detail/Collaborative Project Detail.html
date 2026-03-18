@@ -48,17 +48,17 @@
                 </div>
 <transition name="slide-down">
                 <div v-if="show_4k"  @click="close4k"
-                    style="height: calc(100vh - 21px);width: 100%;position: relative;z-index: 901;">
+                    style="height: calc(100vh - 21px);width: 100%;position: relative;z-index: 901;display: flex;flex-direction: column;">
                     <div  class="img-4k-block" v-for="(item,index) in current_json" @click.stop
                         style="position: relative; overflow: hidden;background-color: #20202000;">
                         <transition
                             :name="current_json[0].transitionDirection ? 'slide-vertical-' + current_json[0].transitionDirection : ''">
                             <img :key="current_json[0].img_src_4k" :src="current_json[0].img_src_4k" class="img-4k" loading="eager"
-                                style="position: absolute; top: 0; left: 0; width: 100%; height: 897px; object-fit: cover;"
+                                style="position: absolute; top: 0; left: 0; width: 100%; height: 888px; object-fit: cover;"
                                 alt="大图">
                         </transition>
                     </div>
-                    <div class="img-4k-container" v-if="show_4k" @click.stop>
+                    <div class="img-4k-container" style="margin-top: 161px;" v-if="show_4k" @click.stop>
                         <!--左侧文字-->
                         <div class="title-4k" >
                             <div 
@@ -91,6 +91,10 @@
                                     ">{{current_json[0].text.title2}} 详情    </a>
                                 </div>
                         </div>
+                        
+                    </div>
+                    
+                    <div style="height: calc(100% - 857px);width: 1703px;background-color: #202020;display: flex;margin-top: 0px;">
                         <!--右侧图片以及按钮-->
                         <div class="img-4k-buttons">
                             <div @click.stop="SwitchImg4k(current_json[0].activeThumbIndex - 1)"
@@ -138,8 +142,9 @@
                             </div>
 
                         </div>
-                        <div class="black-block">kk</div>
                     </div>
+                    
+
                 </div>
                 </transition>
 <transition name="fade">
@@ -201,7 +206,8 @@
                         <a class="FZMSTFW3 sidebar-text-link" style="font-size: 30px;"
                             href="/my-html/page/personal/Personal Project.html">个人项目</a>
                         <a class="SMILEYSANS2 sidebar-text-subtitle" style="font-size: 16px;"
-                            href="/my-html/page/personal/Personal Project.html">Personal Project</a>
+                            href="/my-html/page/personal/Personal Project.html">Personal
+                            Project</a>
                     </div>
                     <div class="sidebar-text-item">
                         <a class="FZMSTFW3 sidebar-text-link" style="font-size: 30px;"
