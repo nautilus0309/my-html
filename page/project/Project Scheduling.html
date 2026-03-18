@@ -136,8 +136,11 @@
                             </div>
 
                             <div style="display: flex;width: 100%;height: 64px;padding-top: 27px;">
-                                <div style="width: 416px;height: 64px;">
-                                    <a class="CAROUSELPRO" style="color: #F3E6DA;
+                                <div v-if="item.text.on_shop"
+                                style="width: 416px;height: 64px;">
+                                    <a class="CAROUSELPRO" 
+                                    :href="item.text.src"
+                                    style="color: #F3E6DA;
                                         font-weight: 100;
                                         font-style: Regular;
                                         font-size: 55px;
@@ -147,6 +150,19 @@
                                         text-underline-offset: 2px;
                                         text-decoration-thickness: 1px;
                                     ">{{item.text.title2}}</a>
+                                </div>
+                                <div v-if="!item.text.on_shop"
+                                style="width: 416px;height: 64px;">
+                                    <a class="CAROUSELPRO" style="color: #F3E6DA;
+                                        font-weight: 100;
+                                        font-style: Regular;
+                                        font-size: 55px;
+                                        line-height: 100%;
+                                        letter-spacing: -10%;
+                                        text-decoration: underline;
+                                        text-underline-offset: 2px;
+                                        text-decoration-thickness: 1px;
+                                    ">Coming Soon</a>
                                 </div>
                                 <div style="width: 445px;height: 64px;padding-left: 26px;padding-top: 12px;">
                                     <a class="CAROUSELPRO" style="color: #F3E6DA;
@@ -279,18 +295,35 @@
                         "detail": `详细进度：设计完成
                                     作者留言：没钱打样`,
                         "title2": "More information",
-                        "detail2": "Last updated in 2025-04."
+                        "detail2": "Last updated in 2025-04.",
+                         on_shop:false,
+                         src:``
                     }
                 },
                 {
-                    "big_img_src": "/my-html/img/project/crux45/3.png",
+                    "big_img_src": "/my-html/img/project/damn60/2.png",
+                    "text": {
+                        "title": " DAMN 60",
+                        "project_type": "Keyboard.",
+                        "detail": `详细进度：设计完成
+                                    作者留言：没钱打样`,
+                        "title2": "More information",
+                        "detail2": "Last updated in 2025-04.",
+                         on_shop:true,
+                         src:`/my-html/page/collaborative detail/Collaborative Project Detail.html?id=1`
+                    }
+                },
+                {
+                    "big_img_src": "/my-html/img/project/kingdom keeper/2.webp",
                     "text": {
                         "title": "KINGDOM KEEPER",
                         "project_type": "Keycaps.",
                         "detail": `详细进度：现货在售
                                     作者留言：卖的不好`,
                         "title2": "More information",
-                        "detail2": "Last updated in 2025-04."
+                        "detail2": "Last updated in 2025-04.",
+                         on_shop:true,
+                         src:`/my-html/page/personal detail/Personal Project Detail.html?id=3`
                     }
                 },
                 {
@@ -301,7 +334,9 @@
                         "detail": `详细进度：设计完成
                             作者留言：做着玩玩，不打样`,
                         "title2": "More information",
-                        "detail2": "Last updated in 2025-04."
+                        "detail2": "Last updated in 2025-04.",
+                         on_shop:true,
+                         src:`/my-html/page/personal detail/Personal Project Detail.html?id=0`
                     }
                 }
                 /**
